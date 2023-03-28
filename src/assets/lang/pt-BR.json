@@ -1,0 +1,20 @@
+{
+  "pt-BR": {
+    "details": {
+      "description": "Descrição",
+      "streaming": "Streaming",
+      "buy": "Comprar",
+      "rent": "Alugar",
+      "available": "Disponível Em"
+    },
+    "countries": {
+      "brazil": "Brasil",
+      "portugal": "Portugal",
+      "us": "Estados Unidos"
+    },
+    "global": {
+      "series": "Séries",
+      "movies": "Filmes"
+    }
+  }
+}

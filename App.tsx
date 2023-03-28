@@ -1,18 +1,38 @@
-import { StyleSheet, Text, View } from 'react-native';
+import {
+  Roboto_400Regular,
+  Roboto_700Bold,
+  useFonts,
+} from "@expo-google-fonts/roboto";
+import Constants from "expo-constants";
+import { StatusBar, StyleSheet, View } from "react-native";
+
+import { Loading } from "./src/components/Loading";
+import { Routes } from "./src/routes";
+import theme from "./src/theme";
+import { LocalizationProvider } from "./src/utils/LocalizationProvider";
 
 export default function App() {
+  const [fontsLoadded] = useFonts({
+    Roboto_400Regular,
+    Roboto_700Bold,
+  });
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-    </View>
+    <LocalizationProvider>
+      <View style={styles.default}>
+        <StatusBar
+          barStyle="light-content"
+          backgroundColor={theme.COLORS.GRAY_600}
+          translucent
+        />
+        {fontsLoadded ? <Routes /> : <Loading />}
+      </View>
+    </LocalizationProvider>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  default: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginTop: Constants.statusBarHeight,
   },
 });

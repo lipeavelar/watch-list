@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "patternProperties": {
+    "^[a-z]{2}-[A-Z]{2}$": {
+      "type": "object",
+      "properties": {
+        "details": {
+          "type": "object",
+          "properties": {
+            "description": {
+              "type": "string"
+            },
+            "streaming": {
+              "type": "string"
+            },
+            "buy": {
+              "type": "string"
+            },
+            "rent": {
+              "type": "string"
+            },
+            "available": {
+              "type": "string"
+            }
+          },
+          "required": ["description", "streaming", "buy", "rent", "available"],
+          "additionalProperties": false
+        },
+        "countries": {
+          "type": "object",
+          "properties": {
+            "brazil": {
+              "type":"string"
+            },
+            "portugal": {
+              "type":"string"
+            },
+            "us": {
+              "type":"string"
+            }
+          },
+          "required": ["brazil", "portugal", "us"],
+          "additionalProperties": false
+        },
+        "global": {
+          "type": "object",
+          "properties": {
+            "series": {
+              "type":"string"
+            },
+            "movies": {
+              "type":"string"
+            }
+          },
+          "required": ["series", "movies"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["details", "countries", "global"],
+      "additionalProperties": false
+    }
+  }
+}

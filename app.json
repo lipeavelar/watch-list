@@ -1,0 +1,8 @@
+{
+  "expo": {
+    "name": "Watch List",
+    "slug": "watch-list",
+    "userInterfaceStyle": "dark",
+    "plugins": ["expo-localization"]
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "json.schemas": [
+    {
+      "fileMatch": ["src/assets/lang/*.json"],
+      "url": "./schemas/i18n-schema.json",
+      "additionalProperties": false,
+    }
+  ],
+}
