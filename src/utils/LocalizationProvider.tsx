@@ -12,12 +12,10 @@ interface Props {
 
 interface localizationCtx {
   locale: string;
-  country: {
-    code: string;
-    name: string;
-  };
-  updateCountry: (code: string) => void;
-  getTranslation: (key: Scope, options?: TranslateOptions) => string;
+  country: Country;
+  countryList: Country[];
+  updateCountry: UpdateCountryFunc;
+  getTranslation: GetTranslationFunc;
 }
 
 const LocalizationContext = createContext<localizationCtx>({
@@ -26,6 +24,7 @@ const LocalizationContext = createContext<localizationCtx>({
     code: "",
     name: "",
   },
+  countryList: [],
   updateCountry: () => "",
   getTranslation: () => "",
 });
@@ -39,6 +38,13 @@ export function LocalizationProvider({ children }: Props) {
   i18n.locale = getLocales()[0].languageTag;
   i18n.enableFallback = true;
   i18n.defaultLocale = "en-US";
+
+  const countryList = Object.entries(Countries).map(
+    ([code, translationKey]) => ({
+      code,
+      name: getTranslation(`countries.${Countries[code]}`),
+    })
+  );
 
   const [country, setCountry] = useState({
     code: "US",
@@ -70,6 +76,7 @@ export function LocalizationProvider({ children }: Props) {
   const value = {
     locale: i18n.locale,
     country,
+    countryList,
     updateCountry,
     getTranslation,
   };

@@ -2,7 +2,6 @@ import Constants from "expo-constants";
 import { Image } from "expo-image";
 import { Text } from "react-native";
 
-import { Media } from ".";
 import { styles } from "./styles";
 
 interface Props {

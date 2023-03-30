@@ -6,19 +6,6 @@ import { MediaCard } from "../../components/MediaCard";
 import { useLocalization } from "../../utils/LocalizationProvider";
 import { styles } from "./styles";
 
-interface Media {
-  id: string;
-  title: string;
-  poster: string;
-}
-
-interface MediaAPI {
-  id: string;
-  title?: string;
-  name?: string;
-  poster_path: string;
-}
-
 export default function Trending() {
   const [medias, setMedias] = useState<Media[]>([]);
   const [page, setPage] = useState(1);

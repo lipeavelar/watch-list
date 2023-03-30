@@ -38,10 +38,6 @@ export const providersContainerStyles = StyleSheet.create({
     fontFamily: theme.FONT_FAMILY.BOLD,
     fontSize: theme.FONT_SIZE.LG,
   },
-  providersContainerTitle: {
-    flex: 1,
-    flexDirection: "row",
-  },
 });
 
 export const providerStyles = StyleSheet.create({

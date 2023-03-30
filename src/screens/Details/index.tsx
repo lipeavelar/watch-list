@@ -14,40 +14,6 @@ interface Params {
   type: string;
 }
 
-export interface ProvidersInfo {
-  streaming: string[];
-  rent: string[];
-  buy: string[];
-}
-
-export interface Media {
-  title: string;
-  poster: string;
-  description: string;
-  providers: ProvidersInfo;
-}
-
-interface MediaDetail {
-  title?: string;
-  name?: string;
-  poster_path: string;
-  overview: string;
-}
-
-interface MediaProvider {
-  provider_id: string;
-}
-
-interface MediaProviders {
-  results: {
-    [key: string]: {
-      flatrate?: MediaProvider[];
-      rent?: MediaProvider[];
-      buy?: MediaProvider[];
-    };
-  };
-}
-
 export default function Details() {
   const [media, setMedia] = useState<Media | null>(null);
   const [loading, setLoading] = useState(true);
@@ -55,47 +21,21 @@ export default function Details() {
   const route = useRoute();
   const { id, type } = route.params as Params;
 
-  const { locale, country, getTranslation } = useLocalization();
+  const { locale, country, getTranslation, updateCountry } = useLocalization();
 
   useEffect(() => {
     async function requestDetails() {
       try {
-        const [mediaDetailRes, mediaProvidersRes] = await Promise.all([
-          fetch(
-            `${Constants.expoConfig.extra.apiURL}/${type}/${id}?api_key=${Constants.expoConfig.extra.apiKey}&language=${locale}`
-          ),
-          fetch(
-            `${Constants.expoConfig.extra.apiURL}/${type}/${id}/watch/providers?api_key=${Constants.expoConfig.extra.apiKey}`
-          ),
-        ]);
-        const [mediaDetailJSON, mediaProvidersJSON] = await Promise.all([
-          mediaDetailRes.json(),
-          mediaProvidersRes.json(),
-        ]);
-        const mediaDetail = mediaDetailJSON as MediaDetail;
-        const mediaProviders = mediaProvidersJSON as MediaProviders;
-
-        const code =
-          country.code in mediaProviders.results ? country.code : "US";
+        const mediaDetailRes = await fetch(
+          `${Constants.expoConfig.extra.apiURL}/${type}/${id}?api_key=${Constants.expoConfig.extra.apiKey}&language=${locale}`
+        );
+        const mediaDetail = (await mediaDetailRes.json()) as MediaDetail;
 
         setMedia({
+          id: mediaDetail.id,
           title: mediaDetail.title ?? mediaDetail.name ?? "",
           poster: mediaDetail.poster_path,
           description: mediaDetail.overview,
-          providers: {
-            streaming:
-              mediaProviders.results[code]?.flatrate?.map(
-                (item) => item.provider_id
-              ) ?? [],
-            rent:
-              mediaProviders.results[code]?.rent?.map(
-                (item) => item.provider_id
-              ) ?? [],
-            buy:
-              mediaProviders.results[code]?.buy?.map(
-                (item) => item.provider_id
-              ) ?? [],
-          },
         });
       } catch (err) {
         console.log(err);
@@ -119,7 +59,7 @@ export default function Details() {
             <LabeledText label={getTranslation("details.description")}>
               {media.description}
             </LabeledText>
-            <ProvidersContainer providers={media.providers} />
+            <ProvidersContainer id={id} type={type} />
           </ScrollView>
         </View>
       )}
