@@ -1,5 +1,6 @@
 import { Picker } from "@react-native-picker/picker";
 import { useState } from "react";
+import { View } from "react-native";
 import theme from "../../theme";
 import { styles } from "./styles";
 
@@ -17,7 +18,7 @@ interface Props {
 export default function ComboBox({
   options,
   selectedValue = "",
-  onChange = (item: string) => "",
+  onChange = () => "",
 }: Props) {
   const [selected, setSelected] = useState(
     options.find((item) => item.value == selectedValue)?.value ??
@@ -30,19 +31,21 @@ export default function ComboBox({
   }
 
   return (
-    <Picker
-      style={styles.container}
-      selectedValue={selected}
-      onValueChange={handleValueChange}
-      dropdownIconColor={theme.COLORS.WHITE}
-    >
-      {options.map((option) => (
-        <Picker.Item
-          key={option.value}
-          label={option.label}
-          value={option.value}
-        />
-      ))}
-    </Picker>
+    <View style={styles.container}>
+      <Picker
+        style={styles.picker}
+        selectedValue={selected}
+        onValueChange={handleValueChange}
+        dropdownIconColor={theme.COLORS.WHITE}
+      >
+        {options.map((option) => (
+          <Picker.Item
+            key={option.value}
+            label={option.label}
+            value={option.value}
+          />
+        ))}
+      </Picker>
+    </View>
   );
 }

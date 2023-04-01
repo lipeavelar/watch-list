@@ -3,14 +3,7 @@ interface Media {
   title: string;
   poster: string;
   description: string;
-}
-
-interface MediaDetail {
-  id: string;
-  title?: string;
-  name?: string;
-  poster_path: string;
-  overview: string;
+  genres: string[];
 }
 
 interface ProvidersInfo {

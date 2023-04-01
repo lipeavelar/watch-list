@@ -5,10 +5,22 @@
     "^[a-z]{2}-[A-Z]{2}$": {
       "type": "object",
       "properties": {
+        "trending": {
+          "type": "object",
+          "properties": {
+            "search":{
+              "type": "string"
+            }
+          },
+          "required": ["search"]
+        },
         "details": {
           "type": "object",
           "properties": {
             "description": {
+              "type": "string"
+            },
+            "genres": {
               "type": "string"
             },
             "streaming": {
@@ -24,7 +36,7 @@
               "type": "string"
             }
           },
-          "required": ["description", "streaming", "buy", "rent", "available"],
+          "required": ["description", "genres", "streaming", "buy", "rent", "available"],
           "additionalProperties": false
         },
         "countries": {
@@ -46,18 +58,18 @@
         "global": {
           "type": "object",
           "properties": {
-            "series": {
+            "tv": {
               "type":"string"
             },
-            "movies": {
+            "movie": {
               "type":"string"
             }
           },
-          "required": ["series", "movies"],
+          "required": ["tv", "movie"],
           "additionalProperties": false
         }
       },
-      "required": ["details", "countries", "global"],
+      "required": ["trending","details", "countries", "global"],
       "additionalProperties": false
     }
   }

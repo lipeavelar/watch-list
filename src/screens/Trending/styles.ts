@@ -7,7 +7,22 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   comboBoxContainer: {
-    paddingHorizontal: 16,
-    marginTop: 12,
+    marginTop: 4,
+    marginBottom: 16,
+    marginHorizontal: 12,
+    minHeight: 48,
+    maxHeight: 48,
+  },
+  searchContainer: {
+    flex: 1,
+    flexDirection: "row",
+    marginVertical: 4,
+    marginHorizontal: 12,
+    minHeight: 48,
+    maxHeight: 48,
+  },
+  searchInputContainer: {
+    width: "85%",
+    marginRight: 4,
   },
 });

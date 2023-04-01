@@ -21,7 +21,7 @@ export default function Details() {
   const route = useRoute();
   const { id, type } = route.params as Params;
 
-  const { locale, country, getTranslation, updateCountry } = useLocalization();
+  const { locale, getTranslation } = useLocalization();
 
   useEffect(() => {
     async function requestDetails() {
@@ -29,13 +29,14 @@ export default function Details() {
         const mediaDetailRes = await fetch(
           `${Constants.expoConfig.extra.apiURL}/${type}/${id}?api_key=${Constants.expoConfig.extra.apiKey}&language=${locale}`
         );
-        const mediaDetail = (await mediaDetailRes.json()) as MediaDetail;
+        const mediaDetail = (await mediaDetailRes.json()) as MediaDetailAPI;
 
         setMedia({
           id: mediaDetail.id,
           title: mediaDetail.title ?? mediaDetail.name ?? "",
           poster: mediaDetail.poster_path,
           description: mediaDetail.overview,
+          genres: mediaDetail.genres.map((genre) => genre.name),
         });
       } catch (err) {
         console.log(err);
@@ -56,6 +57,9 @@ export default function Details() {
         <View style={styles.container}>
           <DetailsHeader media={media} />
           <ScrollView style={styles.details}>
+            <LabeledText label={getTranslation("details.genres")}>
+              {media.genres.join(", ")}
+            </LabeledText>
             <LabeledText label={getTranslation("details.description")}>
               {media.description}
             </LabeledText>

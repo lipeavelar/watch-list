@@ -1,7 +1,11 @@
 {
   "en-US": {
+    "trending": {
+      "search": "Search for %{type}"
+    },
     "details": {
       "description": "Description",
+      "genres": "Genres",
       "streaming": "Streaming Service",
       "buy": "Buy",
       "rent": "Rent",
@@ -13,8 +17,8 @@
       "us": "United States"
     },
     "global": {
-      "movies": "Movies",
-      "series": "Series"
+      "movie": "Movies",
+      "tv": "TV shows"
     }
   }
 }

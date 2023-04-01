@@ -1,7 +1,11 @@
 {
   "pt-BR": {
+    "trending": {
+      "search": "Procurar por %{type}"
+    },
     "details": {
       "description": "Descrição",
+      "genres": "Gêneros",
       "streaming": "Streaming",
       "buy": "Comprar",
       "rent": "Alugar",
@@ -13,8 +17,8 @@
       "us": "Estados Unidos"
     },
     "global": {
-      "series": "Séries",
-      "movies": "Filmes"
+      "tv": "Séries",
+      "movie": "Filmes"
     }
   }
 }
