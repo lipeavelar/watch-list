@@ -25,4 +25,8 @@ export const styles = StyleSheet.create({
     width: "85%",
     marginRight: 4,
   },
+  contentListContainer: {
+    justifyContent: "space-around",
+    alignItems: "center",
+  },
 });

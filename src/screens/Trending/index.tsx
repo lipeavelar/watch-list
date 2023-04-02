@@ -1,7 +1,7 @@
 import Constants from "expo-constants";
 import { MagnifyingGlass } from "phosphor-react-native";
 import { useEffect, useState } from "react";
-import { FlatList, View } from "react-native";
+import { Dimensions, FlatList, Keyboard, View } from "react-native";
 import ComboBox from "../../components/ComboBox";
 import { IconButton } from "../../components/IconButton";
 import Input from "../../components/Input";
@@ -20,6 +20,11 @@ export default function Trending() {
   const [inSearch, setInSearch] = useState(false);
 
   const { locale, getTranslation } = useLocalization();
+
+  const { width } = Dimensions.get("window");
+  const columnWidth = 120; // Change this to your desired column width
+  const numColumns = Math.floor(width / columnWidth);
+  console.log(numColumns);
 
   function updateMedia(newMedia: Media[], append: boolean) {
     const updateMedias: Media[] = [];
@@ -83,7 +88,7 @@ export default function Trending() {
         console.error(err);
       }
     }
-
+    Keyboard.dismiss();
     setInSearch(true);
     requestSearch(search);
     setSearch("");
@@ -122,10 +127,11 @@ export default function Trending() {
         />
       </View>
       <FlatList
-        numColumns={3}
+        numColumns={numColumns}
+        contentContainerStyle={styles.contentListContainer}
         data={medias}
         keyExtractor={({ id }) => id}
-        onEndReached={() => setPage(page + 1)}
+        onEndReached={() => {}}
         onEndReachedThreshold={1}
         renderItem={({ item }) => (
           <MediaCard
