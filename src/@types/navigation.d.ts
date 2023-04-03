@@ -5,6 +5,7 @@ export declare global {
       details: {
         id: string;
       };
+      "watch-later": undefined;
     }
   }
 }

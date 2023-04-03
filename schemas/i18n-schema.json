@@ -10,9 +10,21 @@
           "properties": {
             "search":{
               "type": "string"
+            },
+            "name": {
+              "type": "string"
             }
           },
-          "required": ["search"]
+          "required": ["search", "name"]
+        },
+        "watchLater": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            }
+          },
+          "required": ["name"]
         },
         "details": {
           "type": "object",
@@ -72,7 +84,7 @@
           "additionalProperties": false
         }
       },
-      "required": ["trending","details", "countries", "global"],
+      "required": ["trending","details", "countries", "global", "watchLater"],
       "additionalProperties": false
     }
   }

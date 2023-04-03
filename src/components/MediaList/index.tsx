@@ -4,7 +4,7 @@ import { MediaCard } from "../MediaCard";
 import { styles } from "./styles";
 
 interface Props {
-  medias: Media[];
+  medias: MediaOverview[];
   onUpdate?: () => void;
 }
 

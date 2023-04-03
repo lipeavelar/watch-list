@@ -1,7 +1,11 @@
 {
   "pt-BR": {
     "trending": {
-      "search": "Procurar por %{type}"
+      "search": "Procurar por %{type}",
+      "name": "Em Alta"
+    },
+    "watchLater": {
+      "name": "Para Assistir"
     },
     "details": {
       "description": "Descrição",

@@ -6,6 +6,12 @@ interface Media {
   genres: string[];
 }
 
+interface MediaOverview {
+  id: string;
+  title: string;
+  poster: string;
+}
+
 interface ProvidersInfo {
   streaming: string[];
   rent: string[];
@@ -16,6 +22,7 @@ interface SavedMedia {
   id: string;
   poster: string;
   title: string;
+  type: MediaTypes;
 }
 
 type MediaTypes = "movie" | "tv";

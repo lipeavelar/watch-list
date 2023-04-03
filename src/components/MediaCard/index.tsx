@@ -3,8 +3,11 @@ import Constants from "expo-constants";
 import { Image } from "expo-image";
 import { Text, TouchableOpacity, View } from "react-native";
 
+import { Check, Plus } from "phosphor-react-native";
+import { useMemo } from "react";
+import { usePreferences } from "../../context/PreferencesProvider";
 import { useUserInfo } from "../../context/UserInfoProvider";
-import { SelectButton } from "../SelectButton";
+import theme from "../../theme";
 import { styles } from "./styles";
 
 interface Props {
@@ -16,7 +19,11 @@ interface Props {
 export function MediaCard({ posterURL, title, id }: Props) {
   const navigation = useNavigation();
   const { userInfo, updateWatchLater } = useUserInfo();
-  const onWatchList = userInfo.watchLater.findIndex((i) => i.id === id) > -1;
+  const { preferences } = usePreferences();
+
+  const onWatchList = useMemo(() => {
+    return userInfo.watchLater.findIndex((i) => i.id === id) > -1;
+  }, [userInfo.watchLater]);
 
   function handleDetails() {
     navigation.navigate("details", {
@@ -31,6 +38,7 @@ export function MediaCard({ posterURL, title, id }: Props) {
           id,
           poster: posterURL,
           title,
+          type: preferences.mediaType,
         };
         await updateWatchLater(updateItem, action);
       } catch (err) {
@@ -54,7 +62,13 @@ export function MediaCard({ posterURL, title, id }: Props) {
           <Text style={styles.title} numberOfLines={2}>
             {title}
           </Text>
-          <SelectButton onPress={handleWatchLater} selected={onWatchList} />
+          <TouchableOpacity onPress={() => handleWatchLater(!onWatchList)}>
+            {onWatchList ? (
+              <Check size={20} color={theme.COLORS.WHITE} />
+            ) : (
+              <Plus size={20} color={theme.COLORS.WHITE} />
+            )}
+          </TouchableOpacity>
         </View>
       </View>
     </TouchableOpacity>

@@ -1,5 +1,5 @@
 import { Picker } from "@react-native-picker/picker";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View } from "react-native";
 import theme from "../../theme";
 import { styles } from "./styles";
@@ -24,6 +24,15 @@ export default function ComboBox({
     options.find((item) => item.value == selectedValue)?.value ??
       options[0].value
   );
+
+  useEffect(() => {
+    if (selectedValue != selected) {
+      setSelected(
+        options.find((item) => item.value == selectedValue)?.value ??
+          options[0].value
+      );
+    }
+  }, [selectedValue]);
 
   function handleValueChange(itemValue: string) {
     setSelected(itemValue);

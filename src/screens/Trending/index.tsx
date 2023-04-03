@@ -9,6 +9,7 @@ import Input from "../../components/Input";
 import MediaList from "../../components/MediaList";
 import { useLocalization } from "../../context/LocalizationProvider";
 import { usePreferences } from "../../context/PreferencesProvider";
+import { useUserInfo } from "../../context/UserInfoProvider";
 import theme from "../../theme";
 import { styles } from "./styles";
 
@@ -22,6 +23,7 @@ export default function Trending() {
 
   const { locale, getTranslation } = useLocalization();
   const { preferences, updatePreferences } = usePreferences();
+  const { userInfo } = useUserInfo();
 
   function updateMedia(newMedia: Media[], append: boolean) {
     const updateMedias: Media[] = [];

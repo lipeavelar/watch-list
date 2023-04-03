@@ -1,7 +1,11 @@
 {
   "en-US": {
     "trending": {
-      "search": "Search for %{type}"
+      "search": "Search for %{type}",
+      "name": "Trending"
+    },
+    "watchLater": {
+      "name": "Watch List"
     },
     "details": {
       "description": "Description",
