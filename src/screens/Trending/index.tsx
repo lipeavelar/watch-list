@@ -1,13 +1,15 @@
 import Constants from "expo-constants";
 import { MagnifyingGlass } from "phosphor-react-native";
 import { useEffect, useState } from "react";
-import { Dimensions, FlatList, Keyboard, View } from "react-native";
+import { Keyboard, View } from "react-native";
+
 import ComboBox from "../../components/ComboBox";
 import { IconButton } from "../../components/IconButton";
 import Input from "../../components/Input";
-import { MediaCard } from "../../components/MediaCard";
+import MediaList from "../../components/MediaList";
+import { useLocalization } from "../../context/LocalizationProvider";
+import { usePreferences } from "../../context/PreferencesProvider";
 import theme from "../../theme";
-import { useLocalization } from "../../utils/LocalizationProvider";
 import { styles } from "./styles";
 
 // TODO: figure out how to use dates from release date for movies and first air date for series, but this should be on v1.1...
@@ -15,16 +17,11 @@ import { styles } from "./styles";
 export default function Trending() {
   const [medias, setMedias] = useState<Media[]>([]);
   const [page, setPage] = useState(1);
-  const [type, setType] = useState("movie");
   const [search, setSearch] = useState("");
   const [inSearch, setInSearch] = useState(false);
 
   const { locale, getTranslation } = useLocalization();
-
-  const { width } = Dimensions.get("window");
-  const columnWidth = 120; // Change this to your desired column width
-  const numColumns = Math.floor(width / columnWidth);
-  console.log(numColumns);
+  const { preferences, updatePreferences } = usePreferences();
 
   function updateMedia(newMedia: Media[], append: boolean) {
     const updateMedias: Media[] = [];
@@ -41,7 +38,7 @@ export default function Trending() {
     async function requestTrending() {
       try {
         const res = await fetch(
-          `${Constants.expoConfig.extra.apiURL}/trending/${type}/week?api_key=${Constants.expoConfig.extra.apiKey}&page=${page}&language=${locale}`
+          `${Constants.expoConfig.extra.apiURL}/trending/${preferences.mediaType}/week?api_key=${Constants.expoConfig.extra.apiKey}&page=${page}&language=${locale}`
         );
         const trendingMedias = await res.json();
 
@@ -59,12 +56,12 @@ export default function Trending() {
     }
 
     if (!inSearch) requestTrending();
-  }, [page, type]);
+  }, [page, preferences.mediaType]);
 
-  function handleTypeChange(type: string) {
+  function handleTypeChange(type: MediaTypes) {
     setMedias([]);
     setPage(1);
-    setType(type);
+    updatePreferences({ mediaType: type });
     setInSearch(false);
   }
 
@@ -72,7 +69,7 @@ export default function Trending() {
     async function requestSearch(searchText: string) {
       try {
         const res = await fetch(
-          `${Constants.expoConfig.extra.apiURL}search/${type}?api_key=${Constants.expoConfig.extra.apiKey}&page=1&query=${searchText}&language=${locale}`
+          `${Constants.expoConfig.extra.apiURL}search/${preferences.mediaType}?api_key=${Constants.expoConfig.extra.apiKey}&page=1&query=${searchText}&language=${locale}`
         );
         const searchedMedias = await res.json();
 
@@ -100,7 +97,7 @@ export default function Trending() {
         <View style={styles.searchInputContainer}>
           <Input
             placeholder={getTranslation("trending.search", {
-              type: getTranslation(`global.${type}`),
+              type: getTranslation(`global.${preferences.mediaType}`),
             })}
             value={search}
             onChangeText={setSearch}
@@ -123,26 +120,11 @@ export default function Trending() {
               value: "tv",
             },
           ]}
+          selectedValue={preferences.mediaType}
           onChange={handleTypeChange}
         />
       </View>
-      <FlatList
-        numColumns={numColumns}
-        contentContainerStyle={styles.contentListContainer}
-        data={medias}
-        keyExtractor={({ id }) => id}
-        onEndReached={() => {}}
-        onEndReachedThreshold={1}
-        renderItem={({ item }) => (
-          <MediaCard
-            key={item.id}
-            id={item.id}
-            title={item.title}
-            posterURL={item.poster}
-            type={type}
-          />
-        )}
-      />
+      <MediaList medias={medias} onUpdate={() => setPage(page + 1)} />
     </View>
   );
 }

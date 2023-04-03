@@ -34,9 +34,12 @@
             },
             "available": {
               "type": "string"
+            },
+            "notFound": {
+              "type": "string"
             }
           },
-          "required": ["description", "genres", "streaming", "buy", "rent", "available"],
+          "required": ["description", "genres", "streaming", "buy", "rent", "available", "notFound"],
           "additionalProperties": false
         },
         "countries": {

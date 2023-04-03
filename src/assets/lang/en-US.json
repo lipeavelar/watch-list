@@ -9,7 +9,8 @@
       "streaming": "Streaming Service",
       "buy": "Buy",
       "rent": "Rent",
-      "available": "Available On"
+      "available": "Available On",
+      "notFound": "Unavailable for this country"
     },
     "countries": {
       "brazil": "Brazil",

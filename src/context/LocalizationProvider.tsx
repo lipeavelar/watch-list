@@ -39,12 +39,10 @@ export function LocalizationProvider({ children }: Props) {
   i18n.enableFallback = true;
   i18n.defaultLocale = "en-US";
 
-  const countryList = Object.entries(Countries).map(
-    ([code, translationKey]) => ({
-      code,
-      name: getTranslation(`countries.${Countries[code]}`),
-    })
-  );
+  const countryList = Object.keys(Countries).map((code) => ({
+    code,
+    name: getTranslation(`countries.${Countries[code]}`),
+  }));
 
   const [country, setCountry] = useState({
     code: "US",

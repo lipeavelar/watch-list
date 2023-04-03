@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
 import LabeledText from "../../components/LabeledText";
 import { Loading } from "../../components/Loading";
-import { useLocalization } from "../../utils/LocalizationProvider";
+import { useLocalization } from "../../context/LocalizationProvider";
+import { usePreferences } from "../../context/PreferencesProvider";
 import DetailsHeader from "./details-header";
 import ProvidersContainer from "./providers-container";
 import { styles } from "./styles";
 
 interface Params {
   id: string;
-  type: string;
 }
 
 export default function Details() {
@@ -19,15 +19,16 @@ export default function Details() {
   const [loading, setLoading] = useState(true);
 
   const route = useRoute();
-  const { id, type } = route.params as Params;
+  const { id } = route.params as Params;
 
   const { locale, getTranslation } = useLocalization();
+  const { preferences } = usePreferences();
 
   useEffect(() => {
     async function requestDetails() {
       try {
         const mediaDetailRes = await fetch(
-          `${Constants.expoConfig.extra.apiURL}/${type}/${id}?api_key=${Constants.expoConfig.extra.apiKey}&language=${locale}`
+          `${Constants.expoConfig.extra.apiURL}/${preferences.mediaType}/${id}?api_key=${Constants.expoConfig.extra.apiKey}&language=${locale}`
         );
         const mediaDetail = (await mediaDetailRes.json()) as MediaDetailAPI;
 
@@ -63,7 +64,7 @@ export default function Details() {
             <LabeledText label={getTranslation("details.description")}>
               {media.description}
             </LabeledText>
-            <ProvidersContainer id={id} type={type} />
+            <ProvidersContainer id={id} />
           </ScrollView>
         </View>
       )}

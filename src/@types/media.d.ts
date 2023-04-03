@@ -11,3 +11,11 @@ interface ProvidersInfo {
   rent: string[];
   buy: string[];
 }
+
+interface SavedMedia {
+  id: string;
+  poster: string;
+  title: string;
+}
+
+type MediaTypes = "movie" | "tv";

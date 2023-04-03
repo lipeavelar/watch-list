@@ -38,6 +38,12 @@ export const providersContainerStyles = StyleSheet.create({
     fontFamily: theme.FONT_FAMILY.BOLD,
     fontSize: theme.FONT_SIZE.LG,
   },
+  notFoundText: {
+    color: theme.COLORS.WHITE,
+    fontFamily: theme.FONT_FAMILY.BOLD,
+    fontSize: theme.FONT_SIZE.MD,
+    textAlign: "center",
+  },
 });
 
 export const providerStyles = StyleSheet.create({

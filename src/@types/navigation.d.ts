@@ -4,7 +4,6 @@ export declare global {
       trending: undefined;
       details: {
         id: string;
-        type: string;
       };
     }
   }

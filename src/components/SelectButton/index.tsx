@@ -5,7 +5,7 @@ import theme from "../../theme";
 
 interface Props {
   selected: boolean;
-  onPress: () => void;
+  onPress: (selected: boolean) => void;
 }
 
 export function SelectButton({ selected, onPress }: Props) {
@@ -13,7 +13,7 @@ export function SelectButton({ selected, onPress }: Props) {
 
   function handlePress() {
     setCurrentSelection(!currentSelection);
-    onPress();
+    onPress(!currentSelection);
   }
 
   return (
