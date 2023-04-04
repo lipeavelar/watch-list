@@ -1,11 +1,13 @@
 import { useRoute } from "@react-navigation/native";
 import Constants from "expo-constants";
 import { useEffect, useState } from "react";
-import { Alert, ScrollView, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import LabeledText from "../../components/LabeledText";
 import { Loading } from "../../components/Loading";
+import RatingBox from "../../components/RatingBox";
 import { useLocalization } from "../../context/LocalizationProvider";
 import { usePreferences } from "../../context/PreferencesProvider";
+import { useUserInfo } from "../../context/UserInfoProvider";
 import DetailsHeader from "./details-header";
 import ProvidersContainer from "./providers-container";
 import { styles } from "./styles";
@@ -23,6 +25,7 @@ export default function Details() {
 
   const { locale, getTranslation } = useLocalization();
   const { preferences } = usePreferences();
+  const { userInfo, updateWatch } = useUserInfo();
 
   useEffect(() => {
     async function requestDetails() {
@@ -40,7 +43,7 @@ export default function Details() {
           genres: mediaDetail.genres.map((genre) => genre.name),
         });
       } catch (err) {
-        Alert.alert(err);
+        console.error(err);
       } finally {
         setLoading(false);
       }
@@ -50,6 +53,25 @@ export default function Details() {
     requestDetails();
   }, []);
 
+  function handleNewRating(newRating: Rating) {
+    async function updateList() {
+      try {
+        const updateItem: SavedMedia = {
+          id,
+          poster: media?.poster,
+          title: media?.title,
+          type: preferences.mediaType,
+          rating: newRating,
+        };
+        await updateWatch("rated", updateItem, action);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    const action: WatchListAction = newRating > 0 ? "add" : "remove";
+    updateList();
+  }
+
   return (
     <>
       {loading ? (
@@ -57,10 +79,22 @@ export default function Details() {
       ) : (
         <View style={styles.container}>
           <DetailsHeader media={media} />
-          <ScrollView style={styles.details}>
-            <LabeledText label={getTranslation("details.genres")}>
-              {media.genres.join(", ")}
-            </LabeledText>
+          <ScrollView
+            style={styles.details}
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
+          >
+            <View style={styles.genreRatingContainer}>
+              <LabeledText label={getTranslation("details.genres")}>
+                {media.genres.join(", ")}
+              </LabeledText>
+              <RatingBox
+                rating={
+                  userInfo.rated.find((item) => item.id === id)?.rating ?? 0
+                }
+                onUpdate={handleNewRating}
+              />
+            </View>
             <LabeledText label={getTranslation("details.description")}>
               {media.description}
             </LabeledText>

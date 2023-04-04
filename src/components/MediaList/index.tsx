@@ -17,6 +17,8 @@ export default function MediaList({ medias, onUpdate }: Props) {
     <FlatList
       numColumns={numColumns}
       contentContainerStyle={styles.contentListContainer}
+      showsVerticalScrollIndicator={false}
+      showsHorizontalScrollIndicator={false}
       data={medias}
       keyExtractor={({ id }) => id}
       onEndReached={onUpdate}

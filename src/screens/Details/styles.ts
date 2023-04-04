@@ -6,6 +6,11 @@ export const styles = StyleSheet.create({
     backgroundColor: theme.COLORS.GRAY_600,
     flex: 1,
   },
+  genreRatingContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+  },
   details: {
     flex: 1,
     marginHorizontal: 8,

@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import Constants from "expo-constants";
 import { Image } from "expo-image";
-import { Alert, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 
 import { Check, Plus } from "phosphor-react-native";
 import { useMemo } from "react";
@@ -42,7 +42,7 @@ export function MediaCard({ posterURL, title, id }: Props) {
         };
         await updateWatch("to-see", updateItem, action);
       } catch (err) {
-        Alert.alert(err);
+        console.error(err);
       }
     }
     const action: WatchListAction = selected ? "add" : "remove";

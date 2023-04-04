@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-import { Alert } from "react-native";
 import {
   USER_INFO_RATED,
   USER_INFO_WATCH_LATER,
@@ -36,7 +35,7 @@ export function UserInfoProvider({ children }: Props) {
         const infos = await loadUserInfo();
         setUserInfo(infos);
       } catch (err) {
-        Alert.alert(err);
+        console.error(err);
       }
     }
     loadInfos();
@@ -64,7 +63,7 @@ export function UserInfoProvider({ children }: Props) {
 
   const updates: { [key: string]: (w: SavedMedia[]) => Promise<void> } = {
     "to-see": updateWatchLater,
-    seen: updateWatched,
+    rated: updateWatched,
   };
 
   async function updateWatch(
@@ -72,12 +71,15 @@ export function UserInfoProvider({ children }: Props) {
     media: SavedMedia,
     action: WatchListAction
   ) {
-    const newWatch: SavedMedia[] = [...userInfo.watchLater];
+    const newWatch: SavedMedia[] =
+      list === "to-see" ? [...userInfo.watchLater] : [...userInfo.rated];
     const index = newWatch.findIndex((item) => item.id === media.id);
     switch (action) {
       case "add":
         if (index === -1) {
           newWatch.push(media);
+        } else {
+          newWatch[index] = media;
         }
         break;
       case "remove":
@@ -90,7 +92,7 @@ export function UserInfoProvider({ children }: Props) {
     try {
       await updates[list](newWatch);
     } catch (err) {
-      Alert.alert(err);
+      console.error(err);
     }
   }
 

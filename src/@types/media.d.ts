@@ -26,6 +26,6 @@ interface SavedMedia {
   rating?: Rating;
 }
 
-type Rating = 1 | 2 | 3 | 4 | 5;
-type WatchListType = "to-see" | "seen";
+type Rating = 0 | 1 | 2 | 3 | 4 | 5;
+type WatchListType = "to-see" | "rated";
 type MediaTypes = "movie" | "tv";

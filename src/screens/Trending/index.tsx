@@ -1,7 +1,7 @@
 import Constants from "expo-constants";
 import { MagnifyingGlass } from "phosphor-react-native";
 import { useEffect, useState } from "react";
-import { Alert, Keyboard, View } from "react-native";
+import { Keyboard, View } from "react-native";
 
 import { IconButton } from "../../components/IconButton";
 import Input from "../../components/Input";
@@ -51,7 +51,7 @@ export default function Trending() {
           true
         );
       } catch (err) {
-        Alert.alert(err);
+        console.error(err);
       }
     }
 
@@ -81,7 +81,7 @@ export default function Trending() {
           false
         );
       } catch (err) {
-        Alert.alert(err);
+        console.error(err);
       }
     }
     Keyboard.dismiss();

@@ -11,6 +11,9 @@ export default {
     BLUE: "#0080FF",
     BLUE_DARK: "#0F52BA",
 
+    YELLOW: "#FEE135",
+    YELLOW_DARK: "#F9A603",
+
     GRAY_700: "#121214",
     GRAY_600: "#202024",
     GRAY_500: "#29292E",
