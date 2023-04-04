@@ -7,6 +7,9 @@
     "watchLater": {
       "name": "Watch List"
     },
+    "rated": {
+      "name": "Rated"
+    },
     "details": {
       "description": "Description",
       "genres": "Genres",

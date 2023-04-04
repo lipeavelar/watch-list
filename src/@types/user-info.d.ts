@@ -1,8 +1,10 @@
 interface UserInfo {
   watchLater: SavedMedia[];
+  rated: SavedMedia[];
 }
 
-type UpdateWatchLater = (
+type UpdateWatch = (
+  list: WatchListType,
   media: SavedMedia,
   action: WatchListAction
 ) => Promise<void>;

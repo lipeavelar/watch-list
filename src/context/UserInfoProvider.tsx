@@ -1,6 +1,10 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-import { USER_INFO_WATCH_LATER } from "../storage/storage-config";
+import { Alert } from "react-native";
+import {
+  USER_INFO_RATED,
+  USER_INFO_WATCH_LATER,
+} from "../storage/storage-config";
 import { loadUserInfo, updateWatchList } from "../storage/user-info";
 
 interface Props {
@@ -9,19 +13,21 @@ interface Props {
 
 interface userInfoCtx {
   userInfo: UserInfo;
-  updateWatchLater: UpdateWatchLater;
+  updateWatch: UpdateWatch;
 }
 
 const UserInfoContext = createContext<userInfoCtx>({
   userInfo: {
     watchLater: [],
+    rated: [],
   },
-  updateWatchLater: async () => {},
+  updateWatch: async () => {},
 });
 
 export function UserInfoProvider({ children }: Props) {
   const [userInfo, setUserInfo] = useState<UserInfo>({
     watchLater: [],
+    rated: [],
   });
 
   useEffect(() => {
@@ -30,41 +36,67 @@ export function UserInfoProvider({ children }: Props) {
         const infos = await loadUserInfo();
         setUserInfo(infos);
       } catch (err) {
-        console.log(err);
+        Alert.alert(err);
       }
     }
     loadInfos();
   }, []);
 
-  async function updateWatchLater(media: SavedMedia, action: WatchListAction) {
-    const newWatchLater: SavedMedia[] = [...userInfo.watchLater];
-    const index = newWatchLater.findIndex((item) => item.id === media.id);
+  async function updateWatchLater(newWatchLater: SavedMedia[]) {
+    await updateWatchList(USER_INFO_WATCH_LATER, newWatchLater);
+    setUserInfo({
+      ...userInfo,
+      ...{
+        watchLater: newWatchLater,
+      },
+    });
+  }
+
+  async function updateWatched(newRated: SavedMedia[]) {
+    await updateWatchList(USER_INFO_RATED, newRated);
+    setUserInfo({
+      ...userInfo,
+      ...{
+        rated: newRated,
+      },
+    });
+  }
+
+  const updates: { [key: string]: (w: SavedMedia[]) => Promise<void> } = {
+    "to-see": updateWatchLater,
+    seen: updateWatched,
+  };
+
+  async function updateWatch(
+    list: WatchListType,
+    media: SavedMedia,
+    action: WatchListAction
+  ) {
+    const newWatch: SavedMedia[] = [...userInfo.watchLater];
+    const index = newWatch.findIndex((item) => item.id === media.id);
     switch (action) {
       case "add":
         if (index === -1) {
-          newWatchLater.push(media);
+          newWatch.push(media);
         }
         break;
       case "remove":
         if (index >= 0) {
-          newWatchLater.splice(index, 1);
+          newWatch.splice(index, 1);
         }
         break;
     }
 
     try {
-      await updateWatchList(USER_INFO_WATCH_LATER, newWatchLater);
-      setUserInfo({
-        watchLater: newWatchLater,
-      });
+      await updates[list](newWatch);
     } catch (err) {
-      console.log(err);
+      Alert.alert(err);
     }
   }
 
   const value = {
     userInfo,
-    updateWatchLater,
+    updateWatch,
   };
 
   return (

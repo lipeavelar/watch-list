@@ -7,6 +7,9 @@
     "watchLater": {
       "name": "Para Assistir"
     },
+    "rated": {
+      "name": "Avaliados"
+    },
     "details": {
       "description": "Descrição",
       "genres": "Gêneros",

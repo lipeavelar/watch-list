@@ -1,7 +1,7 @@
 import { useRoute } from "@react-navigation/native";
 import Constants from "expo-constants";
 import { useEffect, useState } from "react";
-import { ScrollView, View } from "react-native";
+import { Alert, ScrollView, View } from "react-native";
 import LabeledText from "../../components/LabeledText";
 import { Loading } from "../../components/Loading";
 import { useLocalization } from "../../context/LocalizationProvider";
@@ -40,7 +40,7 @@ export default function Details() {
           genres: mediaDetail.genres.map((genre) => genre.name),
         });
       } catch (err) {
-        console.log(err);
+        Alert.alert(err);
       } finally {
         setLoading(false);
       }

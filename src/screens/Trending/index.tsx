@@ -1,15 +1,14 @@
 import Constants from "expo-constants";
 import { MagnifyingGlass } from "phosphor-react-native";
 import { useEffect, useState } from "react";
-import { Keyboard, View } from "react-native";
+import { Alert, Keyboard, View } from "react-native";
 
-import ComboBox from "../../components/ComboBox";
 import { IconButton } from "../../components/IconButton";
 import Input from "../../components/Input";
 import MediaList from "../../components/MediaList";
+import MediaTypesBox from "../../components/MediaTypesBox";
 import { useLocalization } from "../../context/LocalizationProvider";
 import { usePreferences } from "../../context/PreferencesProvider";
-import { useUserInfo } from "../../context/UserInfoProvider";
 import theme from "../../theme";
 import { styles } from "./styles";
 
@@ -22,8 +21,7 @@ export default function Trending() {
   const [inSearch, setInSearch] = useState(false);
 
   const { locale, getTranslation } = useLocalization();
-  const { preferences, updatePreferences } = usePreferences();
-  const { userInfo } = useUserInfo();
+  const { preferences } = usePreferences();
 
   function updateMedia(newMedia: Media[], append: boolean) {
     const updateMedias: Media[] = [];
@@ -53,17 +51,16 @@ export default function Trending() {
           true
         );
       } catch (err) {
-        console.error(err);
+        Alert.alert(err);
       }
     }
 
     if (!inSearch) requestTrending();
   }, [page, preferences.mediaType]);
 
-  function handleTypeChange(type: MediaTypes) {
+  function handleTypeChange() {
     setMedias([]);
     setPage(1);
-    updatePreferences({ mediaType: type });
     setInSearch(false);
   }
 
@@ -84,7 +81,7 @@ export default function Trending() {
           false
         );
       } catch (err) {
-        console.error(err);
+        Alert.alert(err);
       }
     }
     Keyboard.dismiss();
@@ -111,20 +108,7 @@ export default function Trending() {
         />
       </View>
       <View style={styles.comboBoxContainer}>
-        <ComboBox
-          options={[
-            {
-              label: getTranslation("global.movie"),
-              value: "movie",
-            },
-            {
-              label: getTranslation("global.tv"),
-              value: "tv",
-            },
-          ]}
-          selectedValue={preferences.mediaType}
-          onChange={handleTypeChange}
-        />
+        <MediaTypesBox onUpdate={handleTypeChange} />
       </View>
       <MediaList medias={medias} onUpdate={() => setPage(page + 1)} />
     </View>

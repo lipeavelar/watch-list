@@ -64,3 +64,9 @@ buck-out/
 web-build/
 
 .envrc
+metro.config.js
+index.js
+
+android/
+
+eas.json

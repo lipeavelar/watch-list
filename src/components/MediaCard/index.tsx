@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import Constants from "expo-constants";
 import { Image } from "expo-image";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Alert, Text, TouchableOpacity, View } from "react-native";
 
 import { Check, Plus } from "phosphor-react-native";
 import { useMemo } from "react";
@@ -18,7 +18,7 @@ interface Props {
 
 export function MediaCard({ posterURL, title, id }: Props) {
   const navigation = useNavigation();
-  const { userInfo, updateWatchLater } = useUserInfo();
+  const { userInfo, updateWatch } = useUserInfo();
   const { preferences } = usePreferences();
 
   const onWatchList = useMemo(() => {
@@ -40,9 +40,9 @@ export function MediaCard({ posterURL, title, id }: Props) {
           title,
           type: preferences.mediaType,
         };
-        await updateWatchLater(updateItem, action);
+        await updateWatch("to-see", updateItem, action);
       } catch (err) {
-        console.log(err);
+        Alert.alert(err);
       }
     }
     const action: WatchListAction = selected ? "add" : "remove";

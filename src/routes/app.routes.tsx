@@ -1,7 +1,8 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { FilmSlate, Queue } from "phosphor-react-native";
+import { FilmSlate, Queue, StarHalf } from "phosphor-react-native";
 
 import Details from "../screens/Details";
+import Rated from "../screens/Rated";
 import Trending from "../screens/Trending";
 import WatchLater from "../screens/WatchLater";
 import theme from "../theme";
@@ -42,6 +43,19 @@ export function AppRoutes() {
             <Queue
               size={28}
               color={focused ? theme.COLORS.BLUE : theme.COLORS.GRAY_200}
+            />
+          ),
+        }}
+      />
+      <Screen
+        name="rated"
+        component={Rated}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <StarHalf
+              size={28}
+              color={focused ? theme.COLORS.BLUE : theme.COLORS.GRAY_200}
+              weight="fill"
             />
           ),
         }}

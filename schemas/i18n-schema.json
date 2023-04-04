@@ -26,6 +26,15 @@
           },
           "required": ["name"]
         },
+        "rated": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            }
+          },
+          "required": ["name"]
+        },
         "details": {
           "type": "object",
           "properties": {
@@ -84,7 +93,7 @@
           "additionalProperties": false
         }
       },
-      "required": ["trending","details", "countries", "global", "watchLater"],
+      "required": ["trending","details", "countries", "global", "watchLater", "rated"],
       "additionalProperties": false
     }
   }

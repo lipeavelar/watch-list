@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
+import { Alert } from "react-native";
 import { loadPreferences, savePreferences } from "../storage/preferences";
 import { useLocalization } from "./LocalizationProvider";
 
@@ -35,7 +36,7 @@ export function PreferencesProvider({ children }: Props) {
         setPreferences(loadedPreferences);
         updateCountry(loadedPreferences.countryCode);
       } catch (err) {
-        console.log(err);
+        Alert.alert(err);
       }
     }
     loadPrefs();

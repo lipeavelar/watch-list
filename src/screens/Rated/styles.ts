@@ -13,16 +13,4 @@ export const styles = StyleSheet.create({
     minHeight: 48,
     maxHeight: 48,
   },
-  searchContainer: {
-    flex: 1,
-    flexDirection: "row",
-    marginVertical: 4,
-    marginHorizontal: 12,
-    minHeight: 48,
-    maxHeight: 48,
-  },
-  searchInputContainer: {
-    width: "85%",
-    marginRight: 4,
-  },
 });

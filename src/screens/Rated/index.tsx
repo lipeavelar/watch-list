@@ -7,17 +7,15 @@ import { usePreferences } from "../../context/PreferencesProvider";
 import { useUserInfo } from "../../context/UserInfoProvider";
 import { styles } from "./styles";
 
-export default function WatchLater() {
+export default function Rated() {
   const { preferences } = usePreferences();
   const { userInfo } = useUserInfo();
 
   const [medias, setMedias] = useState<MediaOverview[]>([]);
 
-  console.log(userInfo);
-
   useEffect(() => {
     setMedias(
-      userInfo.watchLater
+      userInfo.rated
         .filter((item) => item.type === preferences.mediaType)
         .map((item) => ({
           id: item.id,
@@ -25,7 +23,7 @@ export default function WatchLater() {
           title: item.title,
         }))
     );
-  }, [preferences.mediaType, userInfo.watchLater]);
+  }, [preferences.mediaType, userInfo.rated]);
 
   return (
     <View style={styles.container}>

@@ -6,6 +6,7 @@ export declare global {
         id: string;
       };
       "watch-later": undefined;
+      rated: undefined;
     }
   }
 }

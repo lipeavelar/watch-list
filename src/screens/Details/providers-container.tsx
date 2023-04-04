@@ -1,6 +1,6 @@
 import Constants from "expo-constants";
 import { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { Alert, Text, View } from "react-native";
 import ComboBox from "../../components/ComboBox";
 import { useLocalization } from "../../context/LocalizationProvider";
 import { usePreferences } from "../../context/PreferencesProvider";
@@ -48,7 +48,7 @@ export default function ProvidersContainer({ id }: Props) {
 
         setProviders(providersFormatted);
       } catch (err) {
-        console.log(err);
+        Alert.alert(err);
       }
     }
     requestProviders();
