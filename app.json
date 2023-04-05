@@ -4,7 +4,7 @@
     "slug": "watch-list",
     "userInterfaceStyle": "dark",
     "android": {
-      "package": "com.lipeavelar.watch_list",
+      "package": "com.lipeavelar.watchlist",
       "permissions": [
         "READ_EXTERNAL_STORAGE",
         "WRITE_EXTERNAL_STORAGE"

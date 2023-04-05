@@ -28,8 +28,8 @@ export const styles = StyleSheet.create({
   info: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "flex-end",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginTop: 4,
   },
   button: {

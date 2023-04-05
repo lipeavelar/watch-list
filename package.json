@@ -20,7 +20,8 @@
     "react-native-svg": "13.4.0",
     "react-native-web": "~0.18.7",
     "expo-splash-screen": "~0.18.1",
-    "expo-status-bar": "~1.4.4"
+    "expo-status-bar": "~1.4.4",
+    "expo-dev-client": "~2.1.6"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",

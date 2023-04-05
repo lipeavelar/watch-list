@@ -51,7 +51,7 @@ export default function Details() {
 
     setLoading(true);
     requestDetails();
-  }, []);
+  }, [id]);
 
   function handleNewRating(newRating: Rating) {
     async function updateList() {

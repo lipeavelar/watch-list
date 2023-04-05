@@ -13,8 +13,6 @@ export default function WatchLater() {
 
   const [medias, setMedias] = useState<MediaOverview[]>([]);
 
-  console.log(userInfo);
-
   useEffect(() => {
     setMedias(
       userInfo.watchLater
