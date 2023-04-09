@@ -1,7 +1,12 @@
 import Constants from "expo-constants";
 import { MagnifyingGlass } from "phosphor-react-native";
 import { useEffect, useState } from "react";
-import { Keyboard, View } from "react-native";
+import {
+  Keyboard,
+  NativeSyntheticEvent,
+  TextInputKeyPressEventData,
+  View,
+} from "react-native";
 
 import { IconButton } from "../../components/IconButton";
 import Input from "../../components/Input";
@@ -65,6 +70,9 @@ export default function Trending() {
   }
 
   function handleSearch() {
+    if (!search) {
+      return;
+    }
     async function requestSearch(searchText: string) {
       try {
         const res = await fetch(
@@ -90,6 +98,12 @@ export default function Trending() {
     setSearch("");
   }
 
+  function handleKeyPress(e: NativeSyntheticEvent<TextInputKeyPressEventData>) {
+    if (e.nativeEvent.key === "Enter") {
+      handleSearch();
+    }
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.searchContainer}>
@@ -100,6 +114,8 @@ export default function Trending() {
             })}
             value={search}
             onChangeText={setSearch}
+            onKeyPress={handleKeyPress}
+            onSubmitEditing={handleSearch}
           />
         </View>
         <IconButton

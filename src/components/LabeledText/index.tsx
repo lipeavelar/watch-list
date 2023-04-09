@@ -9,8 +9,8 @@ interface Props {
 export default function DetailsPage({ label, children }: Props) {
   return (
     <View style={styles.container}>
-      <Text style={{ ...styles.text, ...styles.label }}>{label}</Text>
-      <Text style={{ ...styles.text, ...styles.content }}>{children}</Text>
+      <Text style={[styles.text, styles.label]}>{label}</Text>
+      <Text style={[styles.text, styles.content]}>{children}</Text>
     </View>
   );
 }

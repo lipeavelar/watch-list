@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: theme.COLORS.GRAY_400,
-    width: 120,
+    width: 100,
     marginHorizontal: 8,
     marginVertical: 8,
     padding: 8,

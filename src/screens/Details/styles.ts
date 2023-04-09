@@ -13,21 +13,26 @@ export const styles = StyleSheet.create({
   },
   details: {
     flex: 1,
-    marginHorizontal: 8,
+    paddingHorizontal: 8,
   },
   text: {
     color: theme.COLORS.WHITE,
-  },
-  title: {
-    fontFamily: theme.FONT_FAMILY.BOLD,
-    fontSize: theme.FONT_SIZE.XL,
-    textAlign: "center",
-    marginVertical: 4,
   },
   cover: {
     flex: 1,
     maxHeight: 300,
     minHeight: 300,
+  },
+  titleContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  title: {
+    fontFamily: theme.FONT_FAMILY.BOLD,
+    fontSize: theme.FONT_SIZE.XL,
+    marginLeft: "auto",
+    marginVertical: 4,
   },
 });
 

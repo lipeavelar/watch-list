@@ -1,15 +1,29 @@
 {
   "expo": {
-    "name": "Watch List",
+    "name": "Watch Log",
     "slug": "watch-list",
     "userInterfaceStyle": "dark",
+    "icon": "./src/assets/images/icon.png",
     "android": {
-      "package": "com.lipeavelar.watchlist",
+      "package": "com.lipeavelar.watchlog",
+      "adaptiveIcon": {
+        "backgroundColor": "#C4C4CC",
+        "foregroundImage": "./src/assets/images/adaptive-icon.png"
+      },
       "permissions": [
         "READ_EXTERNAL_STORAGE",
         "WRITE_EXTERNAL_STORAGE"
       ]
     },
+    "splash": {
+      "image": "./src/assets/images/splash.png",
+      "backgroundColor": "#202024",
+      "resizeMode": "contain"
+    },
+    "orientation": "portrait",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "plugins": ["expo-localization"]
   }
 }
