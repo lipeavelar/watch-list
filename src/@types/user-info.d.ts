@@ -9,4 +9,9 @@ type UpdateWatch = (
   action: WatchListAction
 ) => Promise<void>;
 
+type ReplaceLists = (
+  watchLaterList: SavedMedia[],
+  rated: SavedMedia[]
+) => Promise<void>;
+
 type WatchListAction = "add" | "remove";

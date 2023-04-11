@@ -10,9 +10,17 @@
     "rated": {
       "name": "Avaliados"
     },
+    "settings": {
+      "export": "Exportar",
+      "import": "Importar",
+      "importExportLabel": "Importar/exportar dados:",
+      "name": "Configurações"
+    },
     "details": {
       "description": "Descrição",
       "genres": "Gêneros",
+      "movieReleaseDate": "Data de Lançamento",
+      "tvReleaseDate": "Data de Ínicio da Última Temporada",
       "streaming": "Streaming",
       "buy": "Comprar",
       "rent": "Alugar",

@@ -17,6 +17,11 @@ interface GenreAPI {
   name: string;
 }
 
+interface SeasonAPI {
+  season_number: number;
+  air_date: string;
+}
+
 interface MediaAPI {
   id: string;
   title?: string;
@@ -28,6 +33,8 @@ interface MediaDetailAPI {
   id: string;
   title?: string;
   name?: string;
+  release_date?: string;
+  seasons?: SeasonAPI[];
   poster_path: string;
   overview: string;
   genres: GenreAPI[];

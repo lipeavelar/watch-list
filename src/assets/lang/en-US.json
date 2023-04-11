@@ -10,9 +10,17 @@
     "rated": {
       "name": "Rated"
     },
+    "settings": {
+      "export": "Export",
+      "import": "Import",
+      "importExportLabel": "Import/Export data:",
+      "name": "Settings"
+    },
     "details": {
       "description": "Description",
       "genres": "Genres",
+      "movieReleaseDate": "Release Date",
+      "tvReleaseDate": "Last Season Start Date",
       "streaming": "Streaming Service",
       "buy": "Buy",
       "rent": "Rent",

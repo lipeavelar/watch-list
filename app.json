@@ -7,7 +7,7 @@
     "android": {
       "package": "com.lipeavelar.watchlog",
       "adaptiveIcon": {
-        "backgroundColor": "#C4C4CC",
+        "backgroundColor": "#E1E1E6",
         "foregroundImage": "./src/assets/images/adaptive-icon.png"
       },
       "permissions": [
@@ -24,6 +24,9 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "plugins": ["expo-localization"]
+    "plugins": [
+      "expo-localization",
+      "expo-document-picker"
+    ]
   }
 }

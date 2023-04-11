@@ -3,6 +3,7 @@ interface Media {
   title: string;
   poster: string;
   description: string;
+  releaseDate: string;
   genres: string[];
 }
 

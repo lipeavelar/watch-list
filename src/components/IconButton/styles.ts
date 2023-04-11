@@ -12,4 +12,9 @@ export const styles = StyleSheet.create({
     borderRadius: 5,
     color: theme.COLORS.WHITE,
   },
+  text: {
+    color: theme.COLORS.WHITE,
+    fontFamily: theme.FONT_FAMILY.REGULAR,
+    fontSize: theme.FONT_SIZE.MD,
+  },
 });

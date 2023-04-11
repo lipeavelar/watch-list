@@ -35,6 +35,24 @@
           },
           "required": ["name"]
         },
+        "settings": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "importExportLabel": {
+              "type": "string"
+            },
+            "import": {
+              "type": "string"
+            },
+            "export": {
+              "type": "string"
+            }
+          },
+          "required": ["name","importExportLabel","import","export"]
+        },
         "details": {
           "type": "object",
           "properties": {
@@ -42,6 +60,12 @@
               "type": "string"
             },
             "genres": {
+              "type": "string"
+            },
+            "movieReleaseDate": {
+              "type": "string"
+            },
+            "tvReleaseDate": {
               "type": "string"
             },
             "streaming": {
@@ -60,7 +84,7 @@
               "type": "string"
             }
           },
-          "required": ["description", "genres", "streaming", "buy", "rent", "available", "notFound"],
+          "required": ["description", "genres", "movieReleaseDate", "tvReleaseDate", "streaming", "buy", "rent", "available", "notFound"],
           "additionalProperties": false
         },
         "countries": {
@@ -93,7 +117,7 @@
           "additionalProperties": false
         }
       },
-      "required": ["trending","details", "countries", "global", "watchLater", "rated"],
+      "required": ["trending","details", "countries", "global", "watchLater", "rated", "settings"],
       "additionalProperties": false
     }
   }

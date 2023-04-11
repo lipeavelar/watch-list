@@ -13,6 +13,7 @@ interface Props {
 interface userInfoCtx {
   userInfo: UserInfo;
   updateWatch: UpdateWatch;
+  replaceLists: ReplaceLists;
 }
 
 const UserInfoContext = createContext<userInfoCtx>({
@@ -21,6 +22,7 @@ const UserInfoContext = createContext<userInfoCtx>({
     rated: [],
   },
   updateWatch: async () => {},
+  replaceLists: async () => {},
 });
 
 export function UserInfoProvider({ children }: Props) {
@@ -51,8 +53,9 @@ export function UserInfoProvider({ children }: Props) {
     });
   }
 
-  async function updateWatched(newRated: SavedMedia[]) {
+  async function updateRated(newRated: SavedMedia[]) {
     await updateWatchList(USER_INFO_RATED, newRated);
+
     setUserInfo({
       ...userInfo,
       ...{
@@ -63,7 +66,7 @@ export function UserInfoProvider({ children }: Props) {
 
   const updates: { [key: string]: (w: SavedMedia[]) => Promise<void> } = {
     "to-see": updateWatchLater,
-    rated: updateWatched,
+    rated: updateRated,
   };
 
   async function updateWatch(
@@ -96,9 +99,24 @@ export function UserInfoProvider({ children }: Props) {
     }
   }
 
+  async function replaceLists(watchLater: SavedMedia[], rated: SavedMedia[]) {
+    try {
+      await updateWatchList(USER_INFO_WATCH_LATER, watchLater);
+      await updateWatchList(USER_INFO_RATED, rated);
+
+      setUserInfo({
+        watchLater,
+        rated,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   const value = {
     userInfo,
     updateWatch,
+    replaceLists,
   };
 
   return (

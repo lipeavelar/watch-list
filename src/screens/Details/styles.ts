@@ -31,8 +31,11 @@ export const styles = StyleSheet.create({
   title: {
     fontFamily: theme.FONT_FAMILY.BOLD,
     fontSize: theme.FONT_SIZE.XL,
+    textAlign: "center",
     marginLeft: "auto",
     marginVertical: 4,
+    flexWrap: "wrap",
+    maxWidth: "90%",
   },
 });
 

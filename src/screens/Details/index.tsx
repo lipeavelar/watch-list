@@ -35,12 +35,20 @@ export default function Details() {
         );
         const mediaDetail = (await mediaDetailRes.json()) as MediaDetailAPI;
 
+        const releaseDate =
+          mediaDetail.release_date ??
+          mediaDetail.seasons?.reduce((prev, next) =>
+            prev.season_number > next.season_number ? prev : next
+          )?.air_date ??
+          "-";
+
         setMedia({
           id: mediaDetail.id,
           title: mediaDetail.title ?? mediaDetail.name ?? "",
           poster: mediaDetail.poster_path,
           description: mediaDetail.overview,
           genres: mediaDetail.genres.map((genre) => genre.name),
+          releaseDate,
         });
       } catch (err) {
         console.error(err);
@@ -95,6 +103,13 @@ export default function Details() {
                 onUpdate={handleNewRating}
               />
             </View>
+            <LabeledText
+              label={getTranslation(
+                `details.${preferences.mediaType}ReleaseDate`
+              )}
+            >
+              {media.releaseDate.split("-").reverse().join("-")}
+            </LabeledText>
             <LabeledText label={getTranslation("details.description")}>
               {media.description}
             </LabeledText>
