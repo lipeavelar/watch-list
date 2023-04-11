@@ -14,4 +14,6 @@ type ReplaceLists = (
   rated: SavedMedia[]
 ) => Promise<void>;
 
+type UpdatePriority = (id: string, newPriority: number) => Promise<void>;
+
 type WatchListAction = "add" | "remove";

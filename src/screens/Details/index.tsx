@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
 import LabeledText from "../../components/LabeledText";
 import { Loading } from "../../components/Loading";
+import PriorityBox from "../../components/PriorityBox";
 import RatingBox from "../../components/RatingBox";
 import { useLocalization } from "../../context/LocalizationProvider";
 import { usePreferences } from "../../context/PreferencesProvider";
@@ -92,10 +93,12 @@ export default function Details() {
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
           >
-            <View style={styles.genreRatingContainer}>
-              <LabeledText label={getTranslation("details.genres")}>
-                {media.genres.join(", ")}
-              </LabeledText>
+            <View style={[styles.doubleColumContainer, { minHeight: 60 }]}>
+              {userInfo.watchLater.findIndex((i) => i.id === id) > -1 ? (
+                <PriorityBox id={id} />
+              ) : (
+                <View></View>
+              )}
               <RatingBox
                 rating={
                   userInfo.rated.find((item) => item.id === id)?.rating ?? 0
@@ -103,14 +106,25 @@ export default function Details() {
                 onUpdate={handleNewRating}
               />
             </View>
+            <View style={styles.doubleColumContainer}>
+              <LabeledText label={getTranslation("details.genres")}>
+                {media.genres.join(", ")}
+              </LabeledText>
+              <View>
+                <LabeledText
+                  label={getTranslation(
+                    `details.${preferences.mediaType}ReleaseDate`
+                  )}
+                >
+                  {media.releaseDate.split("-").reverse().join("-")}
+                </LabeledText>
+              </View>
+            </View>
+
             <LabeledText
-              label={getTranslation(
-                `details.${preferences.mediaType}ReleaseDate`
-              )}
+              label={getTranslation("details.description")}
+              justifyContent
             >
-              {media.releaseDate.split("-").reverse().join("-")}
-            </LabeledText>
-            <LabeledText label={getTranslation("details.description")}>
               {media.description}
             </LabeledText>
             <ProvidersContainer id={id} />

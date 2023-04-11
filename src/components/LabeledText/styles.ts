@@ -18,7 +18,9 @@ export const styles = StyleSheet.create({
     fontSize: theme.FONT_SIZE.MD,
     marginRight: 8,
     marginLeft: 24,
-    textAlign: "justify",
     flexShrink: 1,
+  },
+  justify: {
+    textAlign: "justify",
   },
 });

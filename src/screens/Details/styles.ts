@@ -6,9 +6,9 @@ export const styles = StyleSheet.create({
     backgroundColor: theme.COLORS.GRAY_600,
     flex: 1,
   },
-  genreRatingContainer: {
+  doubleColumContainer: {
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     alignItems: "center",
   },
   details: {

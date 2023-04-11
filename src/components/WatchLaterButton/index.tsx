@@ -17,9 +17,10 @@ export default function WatchLaterButton({ poster, title, id, style }: Props) {
   const { userInfo, updateWatch } = useUserInfo();
   const { preferences } = usePreferences();
 
-  const onWatchList = useMemo(() => {
-    return userInfo.watchLater.findIndex((i) => i.id === id) > -1;
-  }, [userInfo.watchLater]);
+  const onWatchList = useMemo(
+    () => userInfo.watchLater.findIndex((i) => i.id === id) > -1,
+    [userInfo.watchLater]
+  );
 
   function handleWatchLater(selected: boolean) {
     async function updateList() {

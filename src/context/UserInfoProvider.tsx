@@ -14,6 +14,7 @@ interface userInfoCtx {
   userInfo: UserInfo;
   updateWatch: UpdateWatch;
   replaceLists: ReplaceLists;
+  updatePriority: UpdatePriority;
 }
 
 const UserInfoContext = createContext<userInfoCtx>({
@@ -23,6 +24,7 @@ const UserInfoContext = createContext<userInfoCtx>({
   },
   updateWatch: async () => {},
   replaceLists: async () => {},
+  updatePriority: async () => {},
 });
 
 export function UserInfoProvider({ children }: Props) {
@@ -113,10 +115,40 @@ export function UserInfoProvider({ children }: Props) {
     }
   }
 
+  async function updatePriority(id: string, newPriority: number) {
+    if (newPriority >= userInfo.watchLater.length) {
+      return;
+    }
+
+    const indexToRemove = userInfo.watchLater.findIndex(
+      (item) => item.id === id
+    );
+    if (indexToRemove < 0) {
+      return;
+    }
+
+    const newWatchLater = [...userInfo.watchLater];
+    const removedElement = newWatchLater.splice(indexToRemove, 1)[0];
+    newWatchLater.splice(newPriority, 0, removedElement);
+
+    try {
+      await updateWatchList(USER_INFO_WATCH_LATER, newWatchLater);
+      setUserInfo({
+        ...userInfo,
+        ...{
+          watchLater: newWatchLater,
+        },
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   const value = {
     userInfo,
     updateWatch,
     replaceLists,
+    updatePriority,
   };
 
   return (
