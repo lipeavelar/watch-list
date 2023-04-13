@@ -12,8 +12,8 @@ import { IconButton } from "../../components/IconButton";
 import Input from "../../components/Input";
 import MediaList from "../../components/MediaList";
 import MediaTypesBox from "../../components/MediaTypesBox";
-import { useLocalization } from "../../context/LocalizationProvider";
-import { usePreferences } from "../../context/PreferencesProvider";
+import { useLocalization } from "../../contexts/LocalizationProvider";
+import { usePreferences } from "../../contexts/PreferencesProvider";
 import theme from "../../theme";
 import { styles } from "./styles";
 
@@ -22,11 +22,22 @@ import { styles } from "./styles";
 export default function Trending() {
   const [medias, setMedias] = useState<Media[]>([]);
   const [page, setPage] = useState(1);
+
   const [search, setSearch] = useState("");
+  const [lastSearch, setLastSearch] = useState("");
   const [inSearch, setInSearch] = useState(false);
 
   const { locale, getTranslation } = useLocalization();
   const { preferences } = usePreferences();
+
+  function getTredingURL(currentPage: number) {
+    return `${Constants.expoConfig.extra.apiURL}trending/${preferences.mediaType}/week?api_key=${Constants.expoConfig.extra.apiKey}&page=${currentPage}&language=${locale}`;
+  }
+
+  function getSearchingURL(currentPage: number, toSearch?: string) {
+    const whatSearch = toSearch ?? lastSearch;
+    return `${Constants.expoConfig.extra.apiURL}search/${preferences.mediaType}?api_key=${Constants.expoConfig.extra.apiKey}&page=${currentPage}&query=${whatSearch}&language=${locale}`;
+  }
 
   function updateMedia(newMedia: Media[], append: boolean) {
     const updateMedias: Media[] = [];
@@ -39,63 +50,52 @@ export default function Trending() {
     setMedias([...updateMedias, ...newMediaFiltered]);
   }
 
-  useEffect(() => {
-    async function requestTrending() {
-      try {
-        const res = await fetch(
-          `${Constants.expoConfig.extra.apiURL}/trending/${preferences.mediaType}/week?api_key=${Constants.expoConfig.extra.apiKey}&page=${page}&language=${locale}`
-        );
-        const trendingMedias = await res.json();
+  async function requestMedia(url: string, append: boolean) {
+    try {
+      const res = await fetch(url);
+      const returnedMedias = await res.json();
 
-        updateMedia(
-          trendingMedias.results.map((item: MediaAPI) => ({
-            id: item.id,
-            title: item.title ?? item.name ?? "",
-            poster: item.poster_path,
-          })),
-          true
-        );
-      } catch (err) {
-        console.error(err);
-      }
+      updateMedia(
+        returnedMedias.results.map((item: MediaAPI) => ({
+          id: item.id,
+          title: item.title ?? item.name ?? "",
+          poster: item.poster_path,
+        })),
+        append
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  useEffect(() => {
+    if (page === 1) {
+      return;
     }
 
-    if (!inSearch) requestTrending();
-  }, [page, preferences.mediaType]);
+    if (!inSearch) requestMedia(getTredingURL(page), true);
+    else requestMedia(getSearchingURL(page), true);
+  }, [page]);
 
-  function handleTypeChange() {
-    setMedias([]);
-    setPage(1);
+  useEffect(() => {
     setInSearch(false);
-  }
+    setPage(1);
+
+    requestMedia(getTredingURL(1), false);
+  }, [preferences.mediaType]);
 
   function handleSearch() {
     if (!search) {
       return;
     }
-    async function requestSearch(searchText: string) {
-      try {
-        const res = await fetch(
-          `${Constants.expoConfig.extra.apiURL}search/${preferences.mediaType}?api_key=${Constants.expoConfig.extra.apiKey}&page=1&query=${searchText}&language=${locale}`
-        );
-        const searchedMedias = await res.json();
 
-        updateMedia(
-          searchedMedias.results.map((item: MediaAPI) => ({
-            id: item.id,
-            title: item.title ?? item.name ?? "",
-            poster: item.poster_path,
-          })),
-          false
-        );
-      } catch (err) {
-        console.error(err);
-      }
-    }
     Keyboard.dismiss();
+    setPage(1);
+
     setInSearch(true);
-    requestSearch(search);
+    setLastSearch(search);
     setSearch("");
+    requestMedia(getSearchingURL(1, search), false);
   }
 
   function handleKeyPress(e: NativeSyntheticEvent<TextInputKeyPressEventData>) {
@@ -124,7 +124,7 @@ export default function Trending() {
         />
       </View>
       <View style={styles.comboBoxContainer}>
-        <MediaTypesBox onUpdate={handleTypeChange} />
+        <MediaTypesBox />
       </View>
       <MediaList medias={medias} onUpdate={() => setPage(page + 1)} />
     </View>

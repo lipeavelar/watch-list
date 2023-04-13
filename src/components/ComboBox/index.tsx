@@ -28,7 +28,7 @@ export default function ComboBox({
   useEffect(() => {
     if (selectedValue != selected) {
       setSelected(
-        options.find((item) => item.value == selectedValue)?.value ??
+        options.find((item) => item.value === selectedValue)?.value ??
           options[0].value
       );
     }

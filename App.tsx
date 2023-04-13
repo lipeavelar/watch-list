@@ -8,9 +8,9 @@ import React from "react";
 import { StatusBar, StyleSheet, View } from "react-native";
 
 import { Loading } from "./src/components/Loading";
-import { LocalizationProvider } from "./src/context/LocalizationProvider";
-import { PreferencesProvider } from "./src/context/PreferencesProvider";
-import { UserInfoProvider } from "./src/context/UserInfoProvider";
+import { LocalizationProvider } from "./src/contexts/LocalizationProvider";
+import { PreferencesProvider } from "./src/contexts/PreferencesProvider";
+import { UserInfoProvider } from "./src/contexts/UserInfoProvider";
 import { Routes } from "./src/routes";
 import theme from "./src/theme";
 

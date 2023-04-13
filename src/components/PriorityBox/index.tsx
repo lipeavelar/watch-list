@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { View } from "react-native";
-import { usePreferences } from "../../context/PreferencesProvider";
-import { useUserInfo } from "../../context/UserInfoProvider";
+import { usePreferences } from "../../contexts/PreferencesProvider";
+import { useUserInfo } from "../../contexts/UserInfoProvider";
 import ComboBox from "../ComboBox";
 
 interface Props {
@@ -10,17 +10,18 @@ interface Props {
 
 export default function PriorityBox({ id }: Props) {
   const { userInfo, updatePriority } = useUserInfo();
-  const { preferences } = usePreferences();
+  const { filterByMediaTypeFunc } = usePreferences();
 
   const numberOfMedias = useMemo(
-    () =>
-      userInfo.watchLater.filter((item) => item.type === preferences.mediaType)
-        .length,
+    () => userInfo.watchLater.filter(filterByMediaTypeFunc).length,
     [userInfo.watchLater]
   );
 
   const selectedMedia = useMemo(
-    () => userInfo.watchLater.findIndex((i) => i.id === id),
+    () =>
+      userInfo.watchLater
+        .filter(filterByMediaTypeFunc)
+        .findIndex((i) => i.id === id),
     [userInfo.watchLater]
   );
 
@@ -29,7 +30,7 @@ export default function PriorityBox({ id }: Props) {
   }
 
   return (
-    <View style={{ minWidth: "25%" }}>
+    <View style={{ minWidth: "40%" }}>
       <ComboBox
         options={[...Array(numberOfMedias).keys()].map((i) => ({
           label: (i + 1).toString(),

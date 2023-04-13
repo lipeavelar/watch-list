@@ -5,8 +5,8 @@ import { Text, View } from "react-native";
 const { StorageAccessFramework } = FileSystem;
 
 import { IconButton } from "../../components/IconButton";
-import { useLocalization } from "../../context/LocalizationProvider";
-import { useUserInfo } from "../../context/UserInfoProvider";
+import { useLocalization } from "../../contexts/LocalizationProvider";
+import { useUserInfo } from "../../contexts/UserInfoProvider";
 import theme from "../../theme";
 import { styles } from "./styles";
 

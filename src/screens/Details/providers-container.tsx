@@ -2,8 +2,8 @@ import Constants from "expo-constants";
 import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import ComboBox from "../../components/ComboBox";
-import { useLocalization } from "../../context/LocalizationProvider";
-import { usePreferences } from "../../context/PreferencesProvider";
+import { useLocalization } from "../../contexts/LocalizationProvider";
+import { usePreferences } from "../../contexts/PreferencesProvider";
 import Providers from "./providers";
 import { providersContainerStyles } from "./styles";
 

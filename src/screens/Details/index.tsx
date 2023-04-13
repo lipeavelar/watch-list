@@ -6,9 +6,9 @@ import LabeledText from "../../components/LabeledText";
 import { Loading } from "../../components/Loading";
 import PriorityBox from "../../components/PriorityBox";
 import RatingBox from "../../components/RatingBox";
-import { useLocalization } from "../../context/LocalizationProvider";
-import { usePreferences } from "../../context/PreferencesProvider";
-import { useUserInfo } from "../../context/UserInfoProvider";
+import { useLocalization } from "../../contexts/LocalizationProvider";
+import { usePreferences } from "../../contexts/PreferencesProvider";
+import { useUserInfo } from "../../contexts/UserInfoProvider";
 import DetailsHeader from "./details-header";
 import ProvidersContainer from "./providers-container";
 import { styles } from "./styles";
@@ -35,6 +35,8 @@ export default function Details() {
           `${Constants.expoConfig.extra.apiURL}/${preferences.mediaType}/${id}?api_key=${Constants.expoConfig.extra.apiKey}&language=${locale}`
         );
         const mediaDetail = (await mediaDetailRes.json()) as MediaDetailAPI;
+
+        // TODO: If movie, get release date from /movie/{movie_id}/release_dates, by selected country
 
         const releaseDate =
           mediaDetail.release_date ??

@@ -2,8 +2,8 @@ import { Check, Plus } from "phosphor-react-native";
 import { useMemo } from "react";
 import { StyleProp, TouchableOpacity, ViewStyle } from "react-native";
 
-import { usePreferences } from "../../context/PreferencesProvider";
-import { useUserInfo } from "../../context/UserInfoProvider";
+import { usePreferences } from "../../contexts/PreferencesProvider";
+import { useUserInfo } from "../../contexts/UserInfoProvider";
 import theme from "../../theme";
 
 interface Props {

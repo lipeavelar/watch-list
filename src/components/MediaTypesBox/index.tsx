@@ -1,5 +1,5 @@
-import { useLocalization } from "../../context/LocalizationProvider";
-import { usePreferences } from "../../context/PreferencesProvider";
+import { useLocalization } from "../../contexts/LocalizationProvider";
+import { usePreferences } from "../../contexts/PreferencesProvider";
 import ComboBox from "../ComboBox";
 
 interface Props {

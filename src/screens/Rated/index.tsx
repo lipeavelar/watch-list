@@ -3,12 +3,12 @@ import { View } from "react-native";
 
 import MediaList from "../../components/MediaList";
 import MediaTypesBox from "../../components/MediaTypesBox";
-import { usePreferences } from "../../context/PreferencesProvider";
-import { useUserInfo } from "../../context/UserInfoProvider";
+import { usePreferences } from "../../contexts/PreferencesProvider";
+import { useUserInfo } from "../../contexts/UserInfoProvider";
 import { styles } from "./styles";
 
 export default function Rated() {
-  const { preferences } = usePreferences();
+  const { preferences, filterByMediaTypeFunc } = usePreferences();
   const { userInfo } = useUserInfo();
 
   const [medias, setMedias] = useState<MediaOverview[]>([]);
@@ -16,12 +16,13 @@ export default function Rated() {
   useEffect(() => {
     setMedias(
       userInfo.rated
-        .filter((item) => item.type === preferences.mediaType)
+        .filter(filterByMediaTypeFunc)
         .map((item) => ({
           id: item.id,
           poster: item.poster,
           title: item.title,
         }))
+        .reverse()
     );
   }, [preferences.mediaType, userInfo.rated]);
 

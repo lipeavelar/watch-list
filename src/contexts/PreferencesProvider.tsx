@@ -10,6 +10,7 @@ interface Props {
 interface preferencesCtx {
   preferences: Preferences;
   updatePreferences: UpdatePreferencesFunc;
+  filterByMediaTypeFunc: FilterByMediaTypeFunc;
 }
 
 const PreferencesContext = createContext<preferencesCtx>({
@@ -18,6 +19,7 @@ const PreferencesContext = createContext<preferencesCtx>({
     mediaType: "movie",
   },
   updatePreferences: async () => {},
+  filterByMediaTypeFunc: () => false,
 });
 
 export function PreferencesProvider({ children }: Props) {
@@ -62,9 +64,14 @@ export function PreferencesProvider({ children }: Props) {
     }
   }
 
+  function filterByMediaTypeFunc(item: SavedMedia): boolean {
+    return item.type === preferences.mediaType;
+  }
+
   const value = {
     preferences,
     updatePreferences,
+    filterByMediaTypeFunc,
   };
 
   return (
