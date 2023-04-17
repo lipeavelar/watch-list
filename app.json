@@ -6,6 +6,7 @@
     "icon": "./src/assets/images/icon.png",
     "android": {
       "package": "com.lipeavelar.watchlog",
+      "versionCode": 1,
       "adaptiveIcon": {
         "backgroundColor": "#E1E1E6",
         "foregroundImage": "./src/assets/images/adaptive-icon.png"

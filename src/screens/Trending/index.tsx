@@ -18,13 +18,13 @@ import theme from "../../theme";
 import { styles } from "./styles";
 
 // TODO: figure out how to use dates from release date for movies and first air date for series, but this should be on v1.1...
+let lastSearch = "";
 
 export default function Trending() {
   const [medias, setMedias] = useState<Media[]>([]);
   const [page, setPage] = useState(1);
 
   const [search, setSearch] = useState("");
-  const [lastSearch, setLastSearch] = useState("");
   const [inSearch, setInSearch] = useState(false);
 
   const { locale, getTranslation } = useLocalization();
@@ -34,9 +34,8 @@ export default function Trending() {
     return `${Constants.expoConfig.extra.apiURL}trending/${preferences.mediaType}/week?api_key=${Constants.expoConfig.extra.apiKey}&page=${currentPage}&language=${locale}`;
   }
 
-  function getSearchingURL(currentPage: number, toSearch?: string) {
-    const whatSearch = toSearch ?? lastSearch;
-    return `${Constants.expoConfig.extra.apiURL}search/${preferences.mediaType}?api_key=${Constants.expoConfig.extra.apiKey}&page=${currentPage}&query=${whatSearch}&language=${locale}`;
+  function getSearchingURL(currentPage: number) {
+    return `${Constants.expoConfig.extra.apiURL}search/${preferences.mediaType}?api_key=${Constants.expoConfig.extra.apiKey}&page=${currentPage}&query=${lastSearch}&language=${locale}`;
   }
 
   function updateMedia(newMedia: Media[], append: boolean) {
@@ -93,9 +92,9 @@ export default function Trending() {
     setPage(1);
 
     setInSearch(true);
-    setLastSearch(search);
+    lastSearch = search;
     setSearch("");
-    requestMedia(getSearchingURL(1, search), false);
+    requestMedia(getSearchingURL(1), false);
   }
 
   function handleKeyPress(e: NativeSyntheticEvent<TextInputKeyPressEventData>) {
