@@ -19,6 +19,7 @@ export default function App() {
     Roboto_400Regular,
     Roboto_700Bold,
   });
+
   return (
     <LocalizationProvider>
       <PreferencesProvider>

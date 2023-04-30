@@ -4,4 +4,5 @@ interface Country {
 }
 
 type UpdateCountryFunc = (code: string) => void;
+type UpdateLanguageFunc = (code: string) => void;
 type GetTranslationFunc = (key: Scope, options?: TranslateOptions) => string;

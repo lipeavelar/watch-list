@@ -22,4 +22,8 @@ export const styles = StyleSheet.create({
     minHeight: "100%",
     marginHorizontal: 8,
   },
+  languagesContainer: {
+    marginTop: 8,
+    marginHorizontal: 8,
+  },
 });

@@ -4,6 +4,7 @@ import { DownloadSimple, UploadSimple } from "phosphor-react-native";
 import { Text, View } from "react-native";
 const { StorageAccessFramework } = FileSystem;
 
+import CountryBox from "../../components/CountryBox";
 import { IconButton } from "../../components/IconButton";
 import { useLocalization } from "../../contexts/LocalizationProvider";
 import { useUserInfo } from "../../contexts/UserInfoProvider";
@@ -12,7 +13,7 @@ import { styles } from "./styles";
 
 export default function Settings() {
   const { userInfo, replaceLists } = useUserInfo();
-  const { getTranslation } = useLocalization();
+  const { getTranslation, updateLanguage } = useLocalization();
 
   async function exportFile() {
     try {
@@ -48,6 +49,10 @@ export default function Settings() {
     }
   }
 
+  function handleLanguageChange(countryCode: string) {
+    updateLanguage(countryCode);
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>
@@ -70,6 +75,12 @@ export default function Settings() {
             {getTranslation("settings.import")}
           </IconButton>
         </View>
+      </View>
+      <Text style={styles.text}>
+        {getTranslation("settings.languagePreference")}
+      </Text>
+      <View style={styles.languagesContainer}>
+        <CountryBox onChange={handleLanguageChange} />
       </View>
     </View>
   );

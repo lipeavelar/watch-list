@@ -1,7 +1,7 @@
 import Constants from "expo-constants";
 import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
-import ComboBox from "../../components/ComboBox";
+import CountryBox from "../../components/CountryBox";
 import { useLocalization } from "../../contexts/LocalizationProvider";
 import { usePreferences } from "../../contexts/PreferencesProvider";
 import Providers from "./providers";
@@ -12,7 +12,7 @@ interface Props {
 }
 
 export default function ProvidersContainer({ id }: Props) {
-  const { getTranslation, countryList, country } = useLocalization();
+  const { getTranslation, country } = useLocalization();
   const { preferences } = usePreferences();
 
   const { updatePreferences } = usePreferences();
@@ -60,17 +60,8 @@ export default function ProvidersContainer({ id }: Props) {
         <Text style={providersContainerStyles.providersTitle}>
           {getTranslation("details.available")}
         </Text>
-        <ComboBox
-          options={countryList.map((country) => ({
-            label: country.name,
-            value: country.code,
-          }))}
-          selectedValue={country.code}
-          onChange={(countryCode: string) =>
-            updatePreferences({
-              countryCode,
-            })
-          }
+        <CountryBox
+          onChange={(countryCode) => updatePreferences({ countryCode })}
         />
         {Object.values(providers).some((arr) => arr.length > 0) ? (
           providersTypes.map((type) => (

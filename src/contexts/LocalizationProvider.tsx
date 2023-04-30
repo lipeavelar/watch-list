@@ -1,6 +1,6 @@
 import { getLocales } from "expo-localization";
 import { I18n, Scope, TranslateOptions } from "i18n-js";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 import Countries from "../assets/countries-list.json";
 import en from "../assets/lang/en-US.json";
@@ -15,6 +15,7 @@ interface localizationCtx {
   country: Country;
   countryList: Country[];
   updateCountry: UpdateCountryFunc;
+  updateLanguage: UpdateCountryFunc;
   getTranslation: GetTranslationFunc;
 }
 
@@ -26,6 +27,7 @@ const LocalizationContext = createContext<localizationCtx>({
   },
   countryList: [],
   updateCountry: () => "",
+  updateLanguage: () => "",
   getTranslation: () => "",
 });
 
@@ -39,15 +41,19 @@ export function LocalizationProvider({ children }: Props) {
   i18n.enableFallback = true;
   i18n.defaultLocale = "en-US";
 
-  const countryList = Object.keys(Countries).map((code) => ({
-    code,
-    name: getTranslation(`countries.${Countries[code]}`),
-  }));
-
   const [country, setCountry] = useState({
     code: "US",
-    name: getTranslation(`countries.${Countries.US}`),
+    name: getTranslation(`countries.${Countries.US.name}`),
   });
+
+  const countryList = useMemo(
+    () =>
+      Object.keys(Countries).map((code) => ({
+        code,
+        name: getTranslation(`countries.${Countries[code].name}`),
+      })),
+    [i18n.locale]
+  );
 
   useEffect(() => {
     const countryCode =
@@ -62,13 +68,21 @@ export function LocalizationProvider({ children }: Props) {
     if (Object.keys(Countries).find((k) => k === code)) {
       setCountry({
         code,
-        name: getTranslation(`countries.${Countries[code]}`),
+        name: getTranslation(`countries.${Countries[code].name}`),
       });
     }
   }
 
+  function updateLanguage(code: string) {
+    i18n.locale = Countries[code].tag;
+  }
+
   function getTranslation(key: Scope, options?: TranslateOptions): string {
-    return i18n.t(key, options);
+    const option = {
+      ...options,
+      locale: i18n.locale,
+    };
+    return i18n.t(key, option);
   }
 
   const value = {
@@ -76,6 +90,7 @@ export function LocalizationProvider({ children }: Props) {
     country,
     countryList,
     updateCountry,
+    updateLanguage,
     getTranslation,
   };
 

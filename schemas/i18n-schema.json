@@ -49,9 +49,12 @@
             },
             "export": {
               "type": "string"
+            },
+            "languagePreference": {
+              "type": "string"
             }
           },
-          "required": ["name","importExportLabel","import","export"]
+          "required": ["name","importExportLabel","import","export","languagePreference"]
         },
         "details": {
           "type": "object",

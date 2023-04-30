@@ -14,7 +14,8 @@
       "export": "Export",
       "import": "Import",
       "importExportLabel": "Import/Export data:",
-      "name": "Settings"
+      "name": "Settings",
+      "languagePreference": "Language Preference:"
     },
     "details": {
       "description": "Description",
