@@ -111,9 +111,15 @@
             },
             "movie": {
               "type":"string"
+            },
+            "shareMedia": {
+              "type":"string"
+            },
+            "shareMediaTitle": {
+              "type":"string"
             }
           },
-          "required": ["tv", "movie"],
+          "required": ["tv", "movie", "shareMedia"],
           "additionalProperties": false
         }
       },

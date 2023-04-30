@@ -37,6 +37,12 @@ export const styles = StyleSheet.create({
     flexWrap: "wrap",
     maxWidth: "90%",
   },
+  buttonContainer: {
+    flexDirection: "row",
+    marginLeft: "auto",
+    marginRight: 8,
+    justifyContent: "space-between",
+  },
 });
 
 export const providersContainerStyles = StyleSheet.create({

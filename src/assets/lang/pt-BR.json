@@ -34,7 +34,9 @@
     },
     "global": {
       "tv": "Séries",
-      "movie": "Filmes"
+      "movie": "Filmes",
+      "shareMedia": "Confira %{mediaTitle}\n%{mediaUrl}",
+      "shareMediaTitle": "Compartilhar Mídia"
     }
   }
 }

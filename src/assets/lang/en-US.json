@@ -34,7 +34,9 @@
     },
     "global": {
       "movie": "Movies",
-      "tv": "TV shows"
+      "tv": "TV shows",
+      "shareMedia": "Check out %{mediaTitle}\n%{mediaUrl}",
+      "shareMediaTitle": "Share Media"
     }
   }
 }
