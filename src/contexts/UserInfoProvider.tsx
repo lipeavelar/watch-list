@@ -1,10 +1,12 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
+import getLocalizedTitles from "../api/getLocalizedTitles";
 import {
   USER_INFO_RATED,
   USER_INFO_WATCH_LATER,
 } from "../storage/storage-config";
 import { loadUserInfo, updateWatchList } from "../storage/user-info";
+import { useLocalization } from "./LocalizationProvider";
 
 interface Props {
   children: React.ReactNode;
@@ -33,10 +35,19 @@ export function UserInfoProvider({ children }: Props) {
     rated: [],
   });
 
+  const { locale } = useLocalization();
+
   useEffect(() => {
     async function loadInfos() {
       try {
         const infos = await loadUserInfo();
+
+        await updateMissingLocalizedTitles(
+          infos.watchLater,
+          USER_INFO_WATCH_LATER
+        );
+        await updateMissingLocalizedTitles(infos.rated, USER_INFO_RATED);
+
         setUserInfo(infos);
       } catch (err) {
         console.error(err);
@@ -44,6 +55,52 @@ export function UserInfoProvider({ children }: Props) {
     }
     loadInfos();
   }, []);
+
+  useEffect(() => {
+    updateTitles(locale);
+  }, [locale]);
+
+  async function updateTitles(countryTag: string) {
+    console.log(locale);
+    function updateList(list: SavedMedia[]) {
+      return list.map((item) => {
+        const title = item.localizedTitles?.[countryTag] ?? item.title;
+        return {
+          ...item,
+          title,
+        };
+      });
+    }
+
+    const newWatchLater = updateList(userInfo.watchLater);
+    const newRated = updateList(userInfo.rated);
+
+    updateWatchList(USER_INFO_WATCH_LATER, newWatchLater);
+    updateWatchList(USER_INFO_RATED, newRated);
+
+    setUserInfo({
+      ...userInfo,
+      watchLater: newWatchLater,
+      rated: newRated,
+    });
+  }
+
+  async function updateMissingLocalizedTitles(list: SavedMedia[], key: string) {
+    try {
+      const promises = list.map(async (item) => {
+        if (!item.localizedTitles) {
+          const localizedTitles = await getLocalizedTitles(item.id, item.type);
+          item.localizedTitles = localizedTitles;
+        }
+        return item;
+      });
+
+      const newList = await Promise.all(promises);
+      await updateWatchList(key, newList);
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   async function updateWatchLater(newWatchLater: SavedMedia[]) {
     await updateWatchList(USER_INFO_WATCH_LATER, newWatchLater);
@@ -81,6 +138,13 @@ export function UserInfoProvider({ children }: Props) {
     const index = newWatch.findIndex((item) => item.id === media.id);
     switch (action) {
       case "add":
+        if (!media.localizedTitles) {
+          const localizedTitles = await getLocalizedTitles(
+            media.id,
+            media.type
+          );
+          media.localizedTitles = localizedTitles;
+        }
         if (index === -1) {
           newWatch.push(media);
         } else {

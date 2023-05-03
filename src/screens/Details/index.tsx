@@ -32,7 +32,7 @@ export default function Details() {
     async function requestDetails() {
       try {
         const mediaDetailRes = await fetch(
-          `${Constants.expoConfig.extra.apiURL}/${preferences.mediaType}/${id}?api_key=${Constants.expoConfig.extra.apiKey}&language=${locale}`
+          `${Constants.expoConfig.extra.apiURL}${preferences.mediaType}/${id}?api_key=${Constants.expoConfig.extra.apiKey}&language=${locale}`
         );
         const mediaDetail = (await mediaDetailRes.json()) as MediaDetailAPI;
 

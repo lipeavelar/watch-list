@@ -24,9 +24,11 @@ interface SavedMedia {
   poster: string;
   title: string;
   type: MediaTypes;
+  localizedTitles?: LocalizedTitles;
   rating?: Rating;
 }
 
+type LocalizedTitles = { [key: string]: string };
 type Rating = 0 | 1 | 2 | 3 | 4 | 5;
 type WatchListType = "to-see" | "rated";
 type MediaTypes = "movie" | "tv";

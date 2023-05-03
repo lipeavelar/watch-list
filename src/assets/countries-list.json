@@ -1,5 +1,5 @@
 {
-  "BR": {"name": "brazil", "tag": "PT-BR"},
-  "PT": {"name": "portugal", "tag": "PT-PT"},	
-  "US": {"name": "us", "tag": "EN-US"}
+  "BR": {"name": "brazil", "tag": "pt-BR"},
+  "PT": {"name": "portugal", "tag": "pt-PT"},	
+  "US": {"name": "us", "tag": "en-US"}
 }

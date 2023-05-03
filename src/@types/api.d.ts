@@ -39,3 +39,11 @@ interface MediaDetailAPI {
   overview: string;
   genres: GenreAPI[];
 }
+
+interface MediaLocalizedTitlesAPI {
+  iso_3166_1: string;
+  data: {
+    title?: string;
+    name?: string;
+  };
+}

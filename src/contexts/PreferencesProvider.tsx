@@ -10,6 +10,7 @@ interface Props {
 interface preferencesCtx {
   preferences: Preferences;
   updatePreferences: UpdatePreferencesFunc;
+  updateLangPreferences: UpdateLangPreferenceFunc;
   filterByMediaTypeFunc: FilterByMediaTypeFunc;
 }
 
@@ -17,8 +18,10 @@ const PreferencesContext = createContext<preferencesCtx>({
   preferences: {
     countryCode: "US",
     mediaType: "movie",
+    languageCode: "US",
   },
   updatePreferences: async () => {},
+  updateLangPreferences: async () => {},
   filterByMediaTypeFunc: () => false,
 });
 
@@ -26,9 +29,10 @@ export function PreferencesProvider({ children }: Props) {
   const [preferences, setPreferences] = useState<Preferences>({
     countryCode: "US",
     mediaType: "movie",
+    languageCode: "US",
   });
 
-  const { updateCountry } = useLocalization();
+  const { updateCountry, updateLanguage } = useLocalization();
 
   useEffect(() => {
     async function loadPrefs() {
@@ -36,16 +40,29 @@ export function PreferencesProvider({ children }: Props) {
         const loadedPreferences = await loadPreferences();
         setPreferences(loadedPreferences);
         updateCountry(loadedPreferences.countryCode);
+        updateLangPreferences(loadedPreferences.languageCode);
       } catch (err) {
         console.error(err);
       }
     }
     loadPrefs();
+    updateLanguage(preferences.languageCode);
   }, []);
 
   useEffect(() => {
     updateCountry(preferences.countryCode);
   }, [preferences.countryCode]);
+
+  async function updateLangPreferences(code: string): Promise<void> {
+    try {
+      updateLanguage(code);
+      await updatePreferences({
+        languageCode: code,
+      });
+    } catch (err) {
+      throw err;
+    }
+  }
 
   async function updatePreferences(
     newPreferences: Partial<Preferences>
@@ -71,6 +88,7 @@ export function PreferencesProvider({ children }: Props) {
   const value = {
     preferences,
     updatePreferences,
+    updateLangPreferences,
     filterByMediaTypeFunc,
   };
 

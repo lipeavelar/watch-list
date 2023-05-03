@@ -7,13 +7,15 @@ const { StorageAccessFramework } = FileSystem;
 import CountryBox from "../../components/CountryBox";
 import { IconButton } from "../../components/IconButton";
 import { useLocalization } from "../../contexts/LocalizationProvider";
+import { usePreferences } from "../../contexts/PreferencesProvider";
 import { useUserInfo } from "../../contexts/UserInfoProvider";
 import theme from "../../theme";
 import { styles } from "./styles";
 
 export default function Settings() {
   const { userInfo, replaceLists } = useUserInfo();
-  const { getTranslation, updateLanguage } = useLocalization();
+  const { getTranslation } = useLocalization();
+  const { updateLangPreferences, preferences } = usePreferences();
 
   async function exportFile() {
     try {
@@ -50,7 +52,7 @@ export default function Settings() {
   }
 
   function handleLanguageChange(countryCode: string) {
-    updateLanguage(countryCode);
+    updateLangPreferences(countryCode);
   }
 
   return (
@@ -80,7 +82,10 @@ export default function Settings() {
         {getTranslation("settings.languagePreference")}
       </Text>
       <View style={styles.languagesContainer}>
-        <CountryBox onChange={handleLanguageChange} />
+        <CountryBox
+          initialValue={preferences.languageCode}
+          onChange={handleLanguageChange}
+        />
       </View>
     </View>
   );

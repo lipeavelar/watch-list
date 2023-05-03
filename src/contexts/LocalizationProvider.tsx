@@ -3,7 +3,7 @@ import { I18n, Scope, TranslateOptions } from "i18n-js";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 import Countries from "../assets/countries-list.json";
-import en from "../assets/lang/en-US.json";
+import enUS from "../assets/lang/en-US.json";
 import ptBR from "../assets/lang/pt-BR.json";
 
 interface Props {
@@ -15,7 +15,7 @@ interface localizationCtx {
   country: Country;
   countryList: Country[];
   updateCountry: UpdateCountryFunc;
-  updateLanguage: UpdateCountryFunc;
+  updateLanguage: UpdateLanguageFunc;
   getTranslation: GetTranslationFunc;
 }
 
@@ -33,18 +33,20 @@ const LocalizationContext = createContext<localizationCtx>({
 
 export function LocalizationProvider({ children }: Props) {
   const i18n = new I18n({
-    ...en,
+    ...enUS,
     ...ptBR,
   });
-
-  i18n.locale = getLocales()[0].languageTag;
-  i18n.enableFallback = true;
-  i18n.defaultLocale = "en-US";
 
   const [country, setCountry] = useState({
     code: "US",
     name: getTranslation(`countries.${Countries.US.name}`),
   });
+
+  const [locale, setLocale] = useState(getLocales()[0].languageTag);
+
+  i18n.locale = locale;
+  i18n.enableFallback = true;
+  i18n.defaultLocale = "en-US";
 
   const countryList = useMemo(
     () =>
@@ -74,19 +76,19 @@ export function LocalizationProvider({ children }: Props) {
   }
 
   function updateLanguage(code: string) {
+    if (!code || !(code in Countries)) {
+      return "en-US";
+    }
+    setLocale(Countries[code].tag);
     i18n.locale = Countries[code].tag;
   }
 
   function getTranslation(key: Scope, options?: TranslateOptions): string {
-    const option = {
-      ...options,
-      locale: i18n.locale,
-    };
-    return i18n.t(key, option);
+    return i18n.t(key, options);
   }
 
   const value = {
-    locale: i18n.locale,
+    locale,
     country,
     countryList,
     updateCountry,

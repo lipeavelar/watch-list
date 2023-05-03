@@ -83,6 +83,16 @@ export default function Trending() {
     requestMedia(getTredingURL(1), false);
   }, [preferences.mediaType]);
 
+  useEffect(() => {
+    setPage(1);
+
+    if (!inSearch) {
+      requestMedia(getTredingURL(1), false);
+    } else {
+      requestMedia(getSearchingURL(1), false);
+    }
+  }, [locale]);
+
   function handleSearch() {
     if (!search) {
       return;

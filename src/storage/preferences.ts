@@ -18,6 +18,7 @@ export async function loadPreferences(): Promise<Preferences> {
       : <Preferences>{
           countryCode: "US",
           mediaType: "movie",
+          languageCode: "US",
         };
   } catch (err) {
     throw err;
