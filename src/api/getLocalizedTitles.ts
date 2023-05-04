@@ -12,9 +12,6 @@ export default async function getLocalizedTitles(
     `${Constants.expoConfig.extra.apiURL}${type}/${id}?api_key=${Constants.expoConfig.extra.apiKey}`
   );
   const mediaDetails = (await mediaDetailRes.json()) as MediaDetailAPI;
-  console.log(
-    `${Constants.expoConfig.extra.apiURL}${type}/${id}?api_key=${Constants.expoConfig.extra.apiKey}`
-  );
   const defaultTitle = mediaDetails.title ?? mediaDetails.name ?? "";
 
   const response = await fetch(
@@ -29,7 +26,6 @@ export default async function getLocalizedTitles(
       translations?.find((item) => item.iso_3166_1 === countryCode)?.data ?? {};
     let localizedTitle = localized.title ?? localized.name ?? "";
     if (!localizedTitle || localizedTitle === "") {
-      console.log(`defaultTitle: ${defaultTitle}`);
       localizedTitle = defaultTitle;
     }
     titles[countryInfo.tag] = localizedTitle;

@@ -1,5 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FilmSlate, Queue, StarHalf, User } from "phosphor-react-native";
+import { useRef } from "react";
 
 import Details from "../screens/Details";
 import Rated from "../screens/Rated";
@@ -11,6 +12,9 @@ import theme from "../theme";
 const { Navigator, Screen } = createBottomTabNavigator();
 
 export function AppRoutes() {
+  const lastTabRef = useRef(null);
+  let isOnDetailsPage = false;
+
   return (
     <Navigator
       screenOptions={{
@@ -23,6 +27,20 @@ export function AppRoutes() {
           borderTopWidth: 0,
         },
       }}
+      screenListeners={({ navigation, route }) => ({
+        focus: () => {
+          if (route.name === "details") {
+            isOnDetailsPage = true;
+            return;
+          }
+          if (isOnDetailsPage && lastTabRef.current) {
+            isOnDetailsPage = false;
+            navigation.navigate(lastTabRef.current);
+            return;
+          }
+          lastTabRef.current = route.name;
+        },
+      })}
     >
       <Screen
         name="trending"

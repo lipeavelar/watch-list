@@ -61,7 +61,6 @@ export function UserInfoProvider({ children }: Props) {
   }, [locale]);
 
   async function updateTitles(countryTag: string) {
-    console.log(locale);
     function updateList(list: SavedMedia[]) {
       return list.map((item) => {
         const title = item.localizedTitles?.[countryTag] ?? item.title;

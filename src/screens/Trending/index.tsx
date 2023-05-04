@@ -1,13 +1,16 @@
 import Constants from "expo-constants";
 import { MagnifyingGlass } from "phosphor-react-native";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
+  BackHandler,
   Keyboard,
   NativeSyntheticEvent,
+  Platform,
   TextInputKeyPressEventData,
   View,
 } from "react-native";
 
+import { useNavigation } from "@react-navigation/native";
 import { IconButton } from "../../components/IconButton";
 import Input from "../../components/Input";
 import MediaList from "../../components/MediaList";
@@ -29,6 +32,8 @@ export default function Trending() {
 
   const { locale, getTranslation } = useLocalization();
   const { preferences } = usePreferences();
+
+  const navigation = useNavigation();
 
   function getTredingURL(currentPage: number) {
     return `${Constants.expoConfig.extra.apiURL}trending/${preferences.mediaType}/week?api_key=${Constants.expoConfig.extra.apiKey}&page=${currentPage}&language=${locale}`;
@@ -67,6 +72,7 @@ export default function Trending() {
     }
   }
 
+  // Handle page change
   useEffect(() => {
     if (page === 1) {
       return;
@@ -76,6 +82,7 @@ export default function Trending() {
     else requestMedia(getSearchingURL(page), true);
   }, [page]);
 
+  // Handle media type change
   useEffect(() => {
     setInSearch(false);
     setPage(1);
@@ -83,6 +90,7 @@ export default function Trending() {
     requestMedia(getTredingURL(1), false);
   }, [preferences.mediaType]);
 
+  // Handle locale change
   useEffect(() => {
     setPage(1);
 
@@ -92,6 +100,34 @@ export default function Trending() {
       requestMedia(getSearchingURL(1), false);
     }
   }, [locale]);
+
+  const handleBackButton = useCallback(() => {
+    if (inSearch) {
+      setInSearch(false);
+      setSearch("");
+      setPage(1);
+      requestMedia(getTredingURL(1), false);
+    } else {
+      if (navigation.canGoBack()) {
+        navigation.goBack();
+      } else {
+        BackHandler.exitApp();
+      }
+    }
+    return true;
+  }, [inSearch]);
+
+  // Handle system back button
+  useEffect(() => {
+    if (Platform.OS === "android") {
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        handleBackButton
+      );
+
+      return () => backHandler.remove();
+    }
+  }, [handleBackButton]);
 
   function handleSearch() {
     if (!search) {
