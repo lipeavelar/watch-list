@@ -70,3 +70,4 @@ index.js
 android/
 
 eas.json
+.secrets
