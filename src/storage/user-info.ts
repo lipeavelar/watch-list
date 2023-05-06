@@ -19,7 +19,6 @@ export async function loadUserInfo(): Promise<UserInfo> {
 
     const ratedString = await AsyncStorage.getItem(USER_INFO_RATED);
     const rated = ratedString ? JSON.parse(ratedString) : [];
-
     return <UserInfo>{
       watchLater,
       rated,

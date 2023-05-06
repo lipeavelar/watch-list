@@ -47,7 +47,6 @@ export function UserInfoProvider({ children }: Props) {
           USER_INFO_WATCH_LATER
         );
         await updateMissingLocalizedTitles(infos.rated, USER_INFO_RATED);
-
         setUserInfo(infos);
       } catch (err) {
         console.error(err);
@@ -70,12 +69,8 @@ export function UserInfoProvider({ children }: Props) {
         };
       });
     }
-
     const newWatchLater = updateList(userInfo.watchLater);
     const newRated = updateList(userInfo.rated);
-
-    updateWatchList(USER_INFO_WATCH_LATER, newWatchLater);
-    updateWatchList(USER_INFO_RATED, newRated);
 
     setUserInfo({
       ...userInfo,

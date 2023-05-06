@@ -28,6 +28,12 @@ export function AppRoutes() {
         },
       }}
       screenListeners={({ navigation, route }) => ({
+        tabPress: () => {
+          if (route.name === "details") {
+            return;
+          }
+          lastTabRef.current = route.name;
+        },
         focus: () => {
           if (route.name === "details") {
             isOnDetailsPage = true;
