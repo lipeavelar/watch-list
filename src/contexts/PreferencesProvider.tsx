@@ -67,17 +67,11 @@ export function PreferencesProvider({ children }: Props) {
   async function updatePreferences(
     newPreferences: Partial<Preferences>
   ): Promise<void> {
-    const preferencesToUpdate = {
-      ...preferences,
-      ...newPreferences,
-    };
-
     try {
-      await savePreferences(preferencesToUpdate);
+      const preferencesToUpdate = await savePreferences(newPreferences);
+      setPreferences(preferencesToUpdate);
     } catch (err) {
       throw err;
-    } finally {
-      setPreferences(preferencesToUpdate);
     }
   }
 
