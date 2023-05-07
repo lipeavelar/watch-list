@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     marginTop: 4,
     marginBottom: 16,
     marginHorizontal: 12,
-    minHeight: 48,
-    maxHeight: 48,
+    minHeight: 100,
+    maxHeight: 100,
   },
 });

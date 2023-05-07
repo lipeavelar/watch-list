@@ -19,6 +19,28 @@ export async function loadUserInfo(): Promise<UserInfo> {
 
     const ratedString = await AsyncStorage.getItem(USER_INFO_RATED);
     const rated = ratedString ? JSON.parse(ratedString) : [];
+
+    if (rated && rated.length > 0) {
+      const currentDate = new Date();
+      let removeDays = rated.length;
+      let updated = false;
+      rated.forEach((media: SavedMedia) => {
+        if (media.ratingAdded) {
+          media.ratingAdded = new Date(media.ratingAdded);
+        } else {
+          const rateDate = new Date();
+          rateDate.setDate(currentDate.getDate() - removeDays);
+          media.ratingAdded = rateDate;
+          updated = true;
+        }
+
+        removeDays--;
+      });
+
+      if (updated) {
+        await AsyncStorage.setItem(USER_INFO_RATED, JSON.stringify(rated));
+      }
+    }
     return <UserInfo>{
       watchLater,
       rated,

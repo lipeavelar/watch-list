@@ -8,7 +8,7 @@
         "trending": {
           "type": "object",
           "properties": {
-            "search":{
+            "search": {
               "type": "string"
             },
             "name": {
@@ -31,9 +31,15 @@
           "properties": {
             "name": {
               "type": "string"
+            },
+            "sortByDate": {
+              "type": "string"
+            },
+            "sortByRating": {
+              "type": "string"
             }
           },
-          "required": ["name"]
+          "required": ["name", "sortByDate", "sortByRating"]
         },
         "settings": {
           "type": "object",
@@ -54,7 +60,13 @@
               "type": "string"
             }
           },
-          "required": ["name","importExportLabel","import","export","languagePreference"]
+          "required": [
+            "name",
+            "importExportLabel",
+            "import",
+            "export",
+            "languagePreference"
+          ]
         },
         "details": {
           "type": "object",
@@ -87,20 +99,30 @@
               "type": "string"
             }
           },
-          "required": ["description", "genres", "movieReleaseDate", "tvReleaseDate", "streaming", "buy", "rent", "available", "notFound"],
+          "required": [
+            "description",
+            "genres",
+            "movieReleaseDate",
+            "tvReleaseDate",
+            "streaming",
+            "buy",
+            "rent",
+            "available",
+            "notFound"
+          ],
           "additionalProperties": false
         },
         "countries": {
           "type": "object",
           "properties": {
             "brazil": {
-              "type":"string"
+              "type": "string"
             },
             "portugal": {
-              "type":"string"
+              "type": "string"
             },
             "us": {
-              "type":"string"
+              "type": "string"
             }
           },
           "required": ["brazil", "portugal", "us"],
@@ -110,23 +132,31 @@
           "type": "object",
           "properties": {
             "tv": {
-              "type":"string"
+              "type": "string"
             },
             "movie": {
-              "type":"string"
+              "type": "string"
             },
             "shareMedia": {
-              "type":"string"
+              "type": "string"
             },
             "shareMediaTitle": {
-              "type":"string"
+              "type": "string"
             }
           },
           "required": ["tv", "movie", "shareMedia"],
           "additionalProperties": false
         }
       },
-      "required": ["trending","details", "countries", "global", "watchLater", "rated", "settings"],
+      "required": [
+        "trending",
+        "details",
+        "countries",
+        "global",
+        "watchLater",
+        "rated",
+        "settings"
+      ],
       "additionalProperties": false
     }
   }

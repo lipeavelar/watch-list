@@ -35,7 +35,7 @@ export const styles = StyleSheet.create({
     marginLeft: "auto",
     marginVertical: 4,
     flexWrap: "wrap",
-    maxWidth: "90%",
+    maxWidth: "85%",
   },
   buttonContainer: {
     flexDirection: "row",

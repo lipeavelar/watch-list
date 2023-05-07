@@ -8,7 +8,9 @@
       "name": "Watch List"
     },
     "rated": {
-      "name": "Rated"
+      "name": "Rated",
+      "sortByDate": "Sort by Most Recent Rating",
+      "sortByRating": "Sort by Best Rating"
     },
     "settings": {
       "export": "Export",

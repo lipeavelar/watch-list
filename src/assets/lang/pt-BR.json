@@ -8,7 +8,9 @@
       "name": "Para Assistir"
     },
     "rated": {
-      "name": "Avaliados"
+      "name": "Avaliados",
+      "sortByDate": "Ordenar por Avaliação Mais Recente",
+      "sortByRating": "Ordenar por Melhor Avaliação"
     },
     "settings": {
       "export": "Exportar",

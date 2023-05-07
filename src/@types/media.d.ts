@@ -26,6 +26,7 @@ interface SavedMedia {
   type: MediaTypes;
   localizedTitles?: LocalizedTitles;
   rating?: Rating;
+  ratingAdded?: Date;
 }
 
 type LocalizedTitles = { [key: string]: string };

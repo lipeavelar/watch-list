@@ -2,6 +2,7 @@ interface Preferences {
   mediaType: MediaTypes;
   countryCode: string;
   languageCode: string;
+  ratingSortType: RatingSort;
 }
 
 type UpdatePreferencesFunc = (
@@ -9,5 +10,5 @@ type UpdatePreferencesFunc = (
 ) => Promise<void>;
 
 type UpdateLangPreferenceFunc = (code: string) => Promise<void>;
-
 type FilterByMediaTypeFunc = (item: SavedMedia) => boolean;
+type RatingSort = "sortByDate" | "sortByRating";

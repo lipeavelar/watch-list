@@ -73,6 +73,7 @@ export default function Details() {
           title: media?.title,
           type: preferences.mediaType,
           rating: newRating,
+          ratingAdded: new Date(),
         };
         await updateWatch("rated", updateItem, action);
       } catch (err) {

@@ -19,6 +19,7 @@ const PreferencesContext = createContext<preferencesCtx>({
     countryCode: "US",
     mediaType: "movie",
     languageCode: "US",
+    ratingSortType: "sortByDate",
   },
   updatePreferences: async () => {},
   updateLangPreferences: async () => {},
@@ -30,6 +31,7 @@ export function PreferencesProvider({ children }: Props) {
     countryCode: "US",
     mediaType: "movie",
     languageCode: "US",
+    ratingSortType: "sortByDate",
   });
 
   const { updateCountry, updateLanguage } = useLocalization();
@@ -38,6 +40,9 @@ export function PreferencesProvider({ children }: Props) {
     async function loadPrefs() {
       try {
         const loadedPreferences = await loadPreferences();
+        if (!loadedPreferences.ratingSortType) {
+          loadedPreferences.ratingSortType = "sortByDate";
+        }
         setPreferences(loadedPreferences);
         updateCountry(loadedPreferences.countryCode);
         updateLangPreferences(loadedPreferences.languageCode);

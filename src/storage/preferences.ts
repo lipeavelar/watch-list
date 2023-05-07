@@ -5,6 +5,7 @@ let currentPreferences: Preferences = {
   countryCode: "",
   mediaType: "movie",
   languageCode: "",
+  ratingSortType: "sortByDate",
 };
 
 export async function savePreferences(
@@ -32,6 +33,7 @@ export async function loadPreferences(): Promise<Preferences> {
           countryCode: "US",
           mediaType: "movie",
           languageCode: "US",
+          ratingSortType: "sortByDate",
         };
     return currentPreferences;
   } catch (err) {
