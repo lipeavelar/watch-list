@@ -31,8 +31,6 @@ export default function ProvidersContainer({ id }: Props) {
         );
         const providersAPI =
           (await mediaProvidersRes.json()) as MediaProvidersAPI;
-        console.log("providersAPI");
-        console.log(providersAPI);
         const providersFormatted: ProvidersInfo = {
           buy:
             providersAPI.results[country.code]?.buy?.map(
