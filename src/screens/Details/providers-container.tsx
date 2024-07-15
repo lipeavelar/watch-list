@@ -27,10 +27,12 @@ export default function ProvidersContainer({ id }: Props) {
     async function requestProviders() {
       try {
         const mediaProvidersRes = await fetch(
-          `${Constants.expoConfig.extra.apiURL}/${preferences.mediaType}/${id}/watch/providers?api_key=${Constants.expoConfig.extra.apiKey}`
+          `${Constants.expoConfig.extra.apiURL}${preferences.mediaType}/${id}/watch/providers?api_key=${Constants.expoConfig.extra.apiKey}`
         );
         const providersAPI =
           (await mediaProvidersRes.json()) as MediaProvidersAPI;
+        console.log("providersAPI");
+        console.log(providersAPI);
         const providersFormatted: ProvidersInfo = {
           buy:
             providersAPI.results[country.code]?.buy?.map(

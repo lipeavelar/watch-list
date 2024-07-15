@@ -2,12 +2,12 @@
   "expo": {
     "name": "Watch Log",
     "slug": "watch-list",
-    "version": "1.1.4",
+    "version": "1.1.5",
     "userInterfaceStyle": "dark",
     "icon": "./src/assets/images/icon.png",
     "android": {
       "package": "com.lipeavelar.watchlog",
-      "versionCode": 6,
+      "versionCode": 7,
       "adaptiveIcon": {
         "backgroundColor": "#E1E1E6",
         "foregroundImage": "./src/assets/images/adaptive-icon.png"
@@ -33,9 +33,10 @@
         "expo-build-properties",
         {
           "android": {
-            "compileSdkVersion": 35,
-            "targetSdkVersion": 35,
-            "buildToolsVersion": "35.0.0"
+            "compileSdkVersion": 34,
+            "targetSdkVersion": 34,
+            "buildToolsVersion": "34.0.0",
+            "kotlinVersion": "1.9.22"
           }
         }
       ]
