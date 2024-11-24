@@ -9,7 +9,8 @@ interface MediaProvidersAPI {
 }
 
 interface MediaProviderAPI {
-  provider_id: string;
+  provider_id: number;
+  logo_path: string;
 }
 
 interface GenreAPI {

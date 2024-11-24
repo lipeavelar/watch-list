@@ -23,6 +23,16 @@ export default function ProvidersContainer({ id }: Props) {
   });
   const providersTypes = ["streaming", "rent", "buy"];
 
+  function convertProviderFromAPI(provider: MediaProviderAPI): Provider {
+    if (!provider || !provider.provider_id || !provider.logo_path) {
+      return;
+    }
+    return {
+      id: provider.provider_id,
+      logoPath: provider.logo_path,
+    };
+  }
+
   useEffect(() => {
     async function requestProviders() {
       try {
@@ -34,15 +44,15 @@ export default function ProvidersContainer({ id }: Props) {
         const providersFormatted: ProvidersInfo = {
           buy:
             providersAPI.results[country.code]?.buy?.map(
-              (item) => item.provider_id
+              convertProviderFromAPI
             ) ?? [],
           rent:
             providersAPI.results[country.code]?.rent?.map(
-              (item) => item.provider_id
+              convertProviderFromAPI
             ) ?? [],
           streaming:
             providersAPI.results[country.code]?.flatrate?.map(
-              (item) => item.provider_id
+              convertProviderFromAPI
             ) ?? [],
         };
 

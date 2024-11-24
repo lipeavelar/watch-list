@@ -13,10 +13,15 @@ interface MediaOverview {
   poster: string;
 }
 
+interface Provider {
+  id: number;
+  logoPath: string;
+}
+
 interface ProvidersInfo {
-  streaming: string[];
-  rent: string[];
-  buy: string[];
+  streaming: Provider[];
+  rent: Provider[];
+  buy: Provider[];
 }
 
 interface SavedMedia {
